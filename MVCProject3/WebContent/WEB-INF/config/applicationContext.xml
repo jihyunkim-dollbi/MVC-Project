@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans> <!-- 파일로 매핑 만들기!   -->
+	<bean id="category" class="com.sist.model.CategoryModel"/>
+	<bean id="middle" class="com.sist.model.MiddleModel"/>
+	<bean id="detail" class="com.sist.model.DetailModel"/>
+	<bean id="news" class="com.sist.news.NewsModel"/>
+</beans>
+<!--  category.do => 커맨드 command -->
