@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 테이블 개수만큼 mapper를 따로 만들어야한다. except getconection,disco~(커넥션!) ==> config.xml(한개!)
+	
+	sql문장!기능 설정!
+	Mapper 안에는
+	PreparedStatment, ResultSet 기능! 
+	
+	
+-->
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.dao.board-mapper"><!-- namespace => package명시 -->
+<!--  (cache-ref | cache | resultMap* | parameterMap* | sql* | insert* | update* | delete* | select*)+ -->
+<!-- 
+	목록 읽어올때 => select!
+	public BoardVO boardListData(Map map)
+	
+	public int movieTotalPage()
+	resultType="int" parameterType="x-> 매개변수x"
+				리턴형				매개변수!
+	
+	
+	Map map=new Hashmap();
+	map.put("start",1)
+	map.put("end",10)
+	
+	ps.setInt(1, start);  ==  map.get("start")
+	ps.setInt(2, end);  ==  map.get("end")
+	
+	순서와 상관없이 key값을 매칭을 시켜주면된다.
+	#{start} == map.get("start")
+	 key명을 줘야한다. ?없다.
+	#{end}   == map.get("end")
+	
+	{} => 나온다는 것은 get메소드를 의미하는 것이다! 
+	
+	Map map = new HashMap();'
+	map.put("boardDetailData","SELECT * FROM board WHERE no=#{no}")
+	
+	
+ -->
+ 	<!--  (include | trim | where | set | foreach | choose | if | bind)*  -->
+	<select id="boardListData" resultType="BoardVO" parameterType="java.util.Map"> <!-- resultType어디에 값을 넣을거니(리턴형)  alias="BoardVO" parameterType ? 매개변수=> 2개 but 가지고 있지 않은 변수도 있어?==> Map에 저장해!!-->
+		SELECT no,subject,name,regdate,hit,TO_CHAR(regdate,'YYYY-MM-DD') as dbday,num
+		FROM(SELECT no,subject,name,regdate,hit,rownum as num
+		FROM(SELECT no,subject,name,regdate,hit
+		FROM board ORDER BY no DESC))
+		WHERE num BETWEEN #{start} AND #{end}
+	</select>
+	<!-- 위에 변수들은 vo에서 set처리가 모두 되었기 때문에 작동한다!! -->
+	<!--  public BoardVO boardDetailData(int no)
+	{		=> selectOne()	========> #{no} 일치시켜야함!
+				객체단위로 한개 받을때!
+	}
+          public List<BoardVO> boardDetailData(int no)
+			=> selectList()
+				 리스트로 받을때!
+	 -->
+	 <select id="boardTotalPage" resultType="int"> <!-- 작업을 나눠서 세분화 하여 작업  -->
+	 	SELECT CEIL(COUNT(*)/10.0) FROM board	 
+	 </select>
+	 
+	 
+	 <sql id="where-no"><!-- no가 반복될때 반복제거 시킴 sql에 중복코딩 갖다놓고 불러서 씀 include refid="where-no"-->
+	 WHERE no=#{no}
+	 </sql>
+	
+	<select id="boardDetailData" resultType="BoardVO" parameterType="int"><!--  *주면 알아서 자동으로 vo에 채워줄 것이다. 더이상set메소드 사용x -->
+		SELECT * FROM board
+		<include refid="where-no"/>
+	</select>
+	
+	<update id="hitIncrement" parameterType="int"><!-- 한 태그당 한개의 sql 문장만 수행! 각 태그에 sql문장 기입하기! -->
+		UPDATE board SET
+		hit=hit+1
+		<include refid="where-no"/>
+	</update>
+	
+	<!--  public void boardInsert (BoardVO vo)
+		{  리턴타입 없다. 
+		}
+	 -->
+	<insert id="boardInsert" parameterType="BoardVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE"> <!-- selectkey no처리먼저 아래처럼 nvl처리 해주고 insert처리해라!!  before준 이유는 selectkey를 실행하고 insert를 수행하라는 의미"order" -->
+		SELECT NVL(MAX(no)+1,1) as no FROM board 
+		</selectKey>
+		INSERT INTO board VALUES(#{no},#{name},#{subject},#{content},#{pwd},SYSDATE,0)
+	</insert>
+	<!-- 
+		alias? 명을 동일하게 맞춰줘야한다.
+		alias : alias의 사전적 의미로는 '가명', '별명'이라는 뜻을 갖고 있다. 본래 이름 대신에 사용 한다는 뜻이다.
+		
+		keyProperty="no"  ==동일 as no
+		rs.getInt(1) ==> rs.getInt("column명")
+	
+		INSERT INTO board VALUES(#{no},#{name},#{subject},#{content},#{pwd},SYSDATE,0)
+								  =no==> selectkey에서 no와 동일! == keyProperty="no"
+		
+		#{name} == vo.getName()
+		
+		#{no},#{name},#{subject},#{content},#{pwd}
+		컬럼명, 변수명으로 값을 보내고 받기때문에 인덱스를 신경쓸 필요x
+		
+		
+	 -->
+	
+	
+	
+	
+	<!-- public void boardUpdate(BoardVO vo) -->
+	<!-- 아래에서 정의하는 항복들은 업데이트 하였을 경우 아래 내용만 db에 업데이트 하라는 것이고 출력하라는 것이 아니다! -->
+	<update id="boardUpdate" parameterType="BoardVO">
+	 UPDATE board SET
+	 name=#{name}, subject=#{subject}, content=#{content}
+	 <include refid="where-no"/>
+	</update>
+	
+	
+	<!-- public void boardDelete(int no) -->
+	<!--<delete id="boardDelete" parameterType="int"></delete> --> 
+	
+</mapper>
