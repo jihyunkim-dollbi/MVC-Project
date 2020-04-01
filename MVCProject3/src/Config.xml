@@ -7,7 +7,7 @@
  
  <configuration>
  	<properties resource="db.properties"/><!-- 파일 읽을때, 내 파일에 있으면 resource로 다른 컴 =>url로 속성 정의!  -->
- 	<typeAliases>
+ 	<typeAliases><!-- 아래  파일들 메모리 할당해..? -->
  		<typeAlias type="com.sist.dao.CategoryVO" alias="CategoryVO"/>
  		<typeAlias type="com.sist.dao.FoodVO" alias="FoodVO"/>
  	</typeAliases>
