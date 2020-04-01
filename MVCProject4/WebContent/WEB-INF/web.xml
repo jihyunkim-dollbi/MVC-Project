@@ -6,7 +6,7 @@
   	<servlet-class>com.sist.controller.DispatcherServlet</servlet-class>
   	<init-param><!-- xml경로 지정! -->
   		<param-name>contextConfigLocation</param-name>
-  		<param-value>C:\webDev\webStudy\MVCProject4\WebContent\applicationContext.xml</param-value>
+  		<param-value>C:\Users\sist\git\repository13\MVCProject4\WebContent\applicationContext.xml</param-value>
   	</init-param><!-- 절대 경로명을 줘야한다. -->
   </servlet>
   

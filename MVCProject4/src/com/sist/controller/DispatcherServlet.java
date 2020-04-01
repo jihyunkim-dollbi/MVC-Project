@@ -34,27 +34,47 @@ import org.w3c.dom.*;
  * 
  * public class A
  * {
- * 		@ => FIELD 필드(맴버변수구분:저장하고 있던(MAP에 저장해놓아..) 메모리주소를 전송한다.)  => @Autowired(맴버변수위에 자동 메모리할당!)
+ * 		@ => 'FIELD' 필드(맴버변수구분:저장하고 있던(MAP에 저장해놓아..) 메모리주소를 전송한다.)  => @Autowired(맴버변수위에 자동 메모리할당!)
  * 		private B b;
  * 		
- * 		public void setB(@ B b)
+ * 		public void setB(@ B b) => 'PARAMETER'(매개변수 앞) => @Resource => 여기에 값을 채우거나 값을 가져올때 , 매개변수 확인가능!
+ * 										메소드 자동호출을 할텐데 어떤 매개변수가 들어가는지 알수 없기때문에...
  * 		{
- * 		this.b=b
+ * 			this.b=b
+ * 	     
+ * 			@ => CONSTRUCT(생성자구분)
+ * 			public A()
+ * 			{
+ * 
+ * 			}
+ * 
+ * 			@ => METHOD구분
+ * 			public void display()
+ * 			{
+ * 				public void aaa(String a, int b){}
+ * 				public void bbb(String a){}
+ * 				public void ccc(String a, double d){}
+ * 
+ *	 		}
+ *			
+ *			매개변수를 찾기위해 아래와 같은 행위를 하지 않아도 된다.....
+ *
+ *			사용자가 a를 입력하면 aaa를 출력하게 만들고
+ *			사용자가 b를 입력하면 bbb를 //
+ *			사용자가 c를 입력하면 ccc를 //
+ *
+ *			A aa=new A();
+ *			if(input=='a')
+ *			 aa.aaa("",10);
+ *			else if(input=='b')
+ *			aa.bbb("");
+ *			.
+ *			.
+ *			.
+ *
+ *			
+ 	  	}	
  * 	
- * 		@
- * 		public A()
- * 		{
- * 
- * 		}
- * 
- * 
- * 		@
- * 		public void display()
- * 		{
- * 
- * 		}
- 		
- * 
  * }
  * 
  * 
@@ -106,19 +126,32 @@ public class DispatcherServlet extends HttpServlet {
 				//	model=com.sist.model.MiddleModel@3269198b
 				//	id=detail
 				//	model=com.sist.model.DetailModel@776b81a2
-				 
+				// . . .
 				
-				//컨트롤러를 클래스에서 찾기??
-				Controller con=(Controller)clsName.getAnnotation(Controller.class);
-				// @Controller가 있으면 1?
-				// @Controller가 없으면 num?
+				
+				//모델클래스들 clsName에서 어노테이션 정보의 검색 결과를 컨트롤러 con객체에 저장함!
+				//Controller con=(Controller)clsName.getAnnotation(Controller.class); //getAnnotation() 어노테이션 정보 찾기!
+				//지운 이유는?
+				
+				
+				
 				if(clsName.isAnnotationPresent(Controller.class)==false)
-					continue; // 어노테이션 없으면 제외!
-
-					
+					continue; // 어노테이션 없으면 메모리 할당에서 제외!됨
+			
 				System.out.println("id="+id);
 				System.out.println("model="+obj);
-				
+				/*
+				 * 현재 7개의 모델 클래스 중에 4개만 클래스 어노테이션을 해 놓은 상태이기 때문에 4개만 검색됨!
+				 * id=main/home
+					model=com.sist.model.HomeModel@4be88179
+					id=main/main
+					model=com.sist.model.MainModel@451c45d1
+					id=member/join
+					model=com.sist.model.JoinModel@68bbfa54
+					id=board/board		
+					model=com.sist.model.BoardModel@40ca8c19
+
+				 */
 				clsMap.put(id, obj); // 미리 생성한 clsMap(주소)- 싱글톤으로 만들어놓기 -> 아래서 사용1
 				
 			}
