@@ -93,7 +93,7 @@ public class DispatcherServlet extends HttpServlet {
 			{
 				Element bean=(Element)list.item(i);
 				//System.out.println(bean.getTagName()); // bean bean bean
-				
+				   
 				String id=bean.getAttribute("id");
 				String cls=bean.getAttribute("class");			
 				
