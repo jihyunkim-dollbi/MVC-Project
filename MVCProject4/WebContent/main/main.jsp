@@ -30,7 +30,6 @@
   
 <div class="container"><!-- 네비게이션 바 아래 컨테이너에 아래 키를 갖고 있는 값들(주소)을 인클루드 시키겠다! -->
  	<jsp:include page="${main_jsp }"></jsp:include>
- 	
 </div>
 
 </body>

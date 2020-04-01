@@ -1,10 +1,5 @@
-
 package com.sist.controller;
-// 1.노테이션을 만들어 놓고
-// 2.할당할 클래스들에 어노테이션 올려놓고
-// 3.클래스들에서 어노테이션을 찾아내어
-// 4. 있으면 할당 처리
-// 5. 없으면 할당 처리x
+// 어노테이션을 만들어 놓고
 import java.io.File;
 
 import java.io.IOException;
@@ -18,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 import com.sist.model.*;
-import com.sist.temp.Controller;
 
 import sun.print.DocumentPropertiesUI;
 
@@ -26,7 +20,7 @@ import javax.xml.parsers.*;
 import org.w3c.dom.*;
 
 //@WebServlet("/DispatcherServlet")
-public class DispatcherServlet extends HttpServlet {
+public class DispatcherServlet3 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	private Map clsMap=new HashMap();
@@ -64,19 +58,16 @@ public class DispatcherServlet extends HttpServlet {
 				
 				System.out.println("id="+id);
 				System.out.println("model="+obj);
-				
-				 // id=category
-				 // model=com.sist.model.CategoryModel@36568b99
-				//	id=middle
-				//	model=com.sist.model.MiddleModel@3269198b
-				//	id=detail
-				//	model=com.sist.model.DetailModel@776b81a2
-				 
-				
-				//컨트롤러를 클래스에서 찾기??
-				Controller con=(Controller)clsName.getAnnotation(Controller.class);
-				// @Controller가 있으면 1?
-				// @Controller가 없으면 num?
+				/*
+				 * id=category
+				   model=com.sist.model.CategoryModel@36568b99
+					id=middle
+					model=com.sist.model.MiddleModel@3269198b
+					id=detail
+					model=com.sist.model.DetailModel@776b81a2
+
+				 * 
+				 */
 				
 				clsMap.put(id, obj); // 미리 생성한 clsMap(주소)- 싱글톤으로 만들어놓기 -> 아래서 사용1
 				
@@ -135,4 +126,3 @@ public class DispatcherServlet extends HttpServlet {
 	}
 
 }
-
