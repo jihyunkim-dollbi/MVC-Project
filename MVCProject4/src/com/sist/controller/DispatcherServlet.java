@@ -98,7 +98,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 		try{
 			
-			//xml 읽기
+			//xml 읽기  - DOM 파싱!
 			DocumentBuilderFactory dbf=DocumentBuilderFactory.newInstance();
 			DocumentBuilder db=dbf.newDocumentBuilder();
 			Document doc=db.parse(new File(path));
