@@ -1,10 +1,7 @@
 package com.sist.controller;
-
 /*
- * 생성자취소
-
- * init & service 매소드만 추가!
- * 항상 컨트롤러 실행!
+ * 서블렛 파일로 컨트롤러 생성!!
+ * init(생성자역할!) & service(메모리할당!) 매소드만 추가! 
  */
 import java.io.IOException;
 
@@ -29,6 +26,7 @@ import com.sist.model.*;
 //list.do insert.do detail.do =>모두 이 해당 controller를 호출하기 위함!!
 
 public class Controller extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
 	public void init(ServletConfig config) throws ServletException {
