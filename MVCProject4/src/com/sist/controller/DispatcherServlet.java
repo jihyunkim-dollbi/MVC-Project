@@ -24,6 +24,44 @@ import sun.print.DocumentPropertiesUI;
 
 import javax.xml.parsers.*;
 import org.w3c.dom.*;
+/*
+ * 어노테이션 사용 법
+ * 
+ * @ => TYPE, 클래스 구분 => 클래스 찾기 ==>@Controller, @Repository, @Component , @Service => 4개가 올라가면 메모리할당을 하겠다!
+ * 									모델 구분		 dao구분	           일반 클래스 구분		manager구분(외부자료)\
+ * 
+ * 이렇게 구분해 놓아야 찾을때 쉽다.
+ * 
+ * public class A
+ * {
+ * 		@ => FIELD 필드(맴버변수구분:저장하고 있던(MAP에 저장해놓아..) 메모리주소를 전송한다.)  => @Autowired(맴버변수위에 자동 메모리할당!)
+ * 		private B b;
+ * 		
+ * 		public void setB(@ B b)
+ * 		{
+ * 		this.b=b
+ * 	
+ * 		@
+ * 		public A()
+ * 		{
+ * 
+ * 		}
+ * 
+ * 
+ * 		@
+ * 		public void display()
+ * 		{
+ * 
+ * 		}
+ 		
+ * 
+ * }
+ * 
+ * 
+ * 
+ */
+
+
 
 //@WebServlet("/DispatcherServlet")
 public class DispatcherServlet extends HttpServlet {
@@ -62,9 +100,6 @@ public class DispatcherServlet extends HttpServlet {
 				Class clsName=Class.forName(cls); //클래스 읽기
 				Object obj=clsName.newInstance(); //com.sist.model.MiddleModel@3269198b
 				
-				System.out.println("id="+id);
-				System.out.println("model="+obj);
-				
 				 // id=category
 				 // model=com.sist.model.CategoryModel@36568b99
 				//	id=middle
@@ -77,6 +112,12 @@ public class DispatcherServlet extends HttpServlet {
 				Controller con=(Controller)clsName.getAnnotation(Controller.class);
 				// @Controller가 있으면 1?
 				// @Controller가 없으면 num?
+				if(clsName.isAnnotationPresent(Controller.class)==false)
+					continue; // 어노테이션 없으면 제외!
+
+					
+				System.out.println("id="+id);
+				System.out.println("model="+obj);
 				
 				clsMap.put(id, obj); // 미리 생성한 clsMap(주소)- 싱글톤으로 만들어놓기 -> 아래서 사용1
 				
