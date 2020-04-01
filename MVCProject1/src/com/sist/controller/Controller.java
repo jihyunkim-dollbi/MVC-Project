@@ -110,8 +110,7 @@ public class Controller extends HttpServlet {
 		//보내기
 		RequestDispatcher rd=request.getRequestDispatcher(jsp);  //request를 여기 jsp로 보내...
 		rd.forward(request, response); //위 jsp에 req, res를 보내라..
-		
-		
+
 		
 		/*		맵에 등록할때마 객체 생성하여 저장해놓으면ok
 		 * 		map.put(“list”, new ListModel());
