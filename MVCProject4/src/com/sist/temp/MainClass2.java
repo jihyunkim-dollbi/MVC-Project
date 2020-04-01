@@ -15,7 +15,7 @@ class A
 	}
 	@RequestMapping("b.do")
 	public void bbb()
-	{
+	{       
 		System.out.println("A:bbb() call...");
 	
 	}
