@@ -67,7 +67,9 @@ public class DispatcherServlet extends HttpServlet {
 					if(rm.value().equals(cmd)) //rm.value()=>main/list.do
 					{
 						//m 메소드를 실행해 => invoke()=> ()에 값을 넣으면 채워줌!
+						
 						String jsp=(String)m.invoke(obj, request, response);
+						System.out.println("jsp: "+jsp); //jsp: list.jsp
 						
 						if(jsp.startsWith("redirect"))
 						{

@@ -4,7 +4,6 @@ package com.sist.controller;
 // 세션은 서버안에 자리가 존재하므로 여기에 저장되지 않고 서버에 저장되므로 사라지지 않는다.
 // 쿠키는 내 컴퓨터에 저장되므로 가져올 수 있다.
 import java.io.IOException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 public class Test extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 
 	
