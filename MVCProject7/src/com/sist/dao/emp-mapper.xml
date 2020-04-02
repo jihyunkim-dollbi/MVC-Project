@@ -5,7 +5,7 @@
  
  <!-- 마이바티스 join 사용법! EmpVO & DeptVO 
  	
- 	기존에는 순서별로 넘버링하여 가져왔지만 바티스에서는 컬럼명을 주어 가져옴. 순서상관x
+ 	기존에는 순서별로 넘버링하여 가져왔지만 바티스에서는 컬럼명을 주어 가져옴. 컬럼을 이용해 값을 넣을 수 있다, 순서상관x
  	SELECT empno, ename, hiredate, sal dname, loc
  	FROM emp, dept
  	WHERE emp.deptno=dept.deptno
@@ -23,10 +23,11 @@
  	}
  
  -->
+ 
 <mapper namespace="com.sist.emp-mapper">
 	<resultMap type="EmpVO" id="empMap">
-		<result column="empno" property="empno"/> <!-- 이 컬럼에 이 값을 채워 -->
-		<!-- vo.setEmpno =>property(rs.getInt("empno"))=> 컬럼  -->
+		<result column="empno" property="empno"/><!-- 이 컬럼에 이 값을 채워 -->
+		<!-- vo.setEmpno => property  (rs.getInt("empno"))=> column  -->
 		<result column="ename" property="ename"/>
 		<result column="job" property="job"/>
 		<result column="mgr" property="mgr"/>
@@ -37,7 +38,7 @@
 		<result column="dname" property="dvo.dname"/>
 		<result column="loc" property="dvo.loc"/>
 	</resultMap>
-	<select id="empAllData" resultMap="empMap"> <!-- 매핑@@! -->
+	<select id="empAllData" resultMap="empMap"> <!-- 매핑 작업@@! --> <!--dao에서 처리 후 empMap에 매핑작업 하면서 값 채움!! -->
 		SELECT empno, ename, job, hiredate, sal, dname, loc
 		FROM emp, dept
 		WHERE emp.deptno=dept.deptno
