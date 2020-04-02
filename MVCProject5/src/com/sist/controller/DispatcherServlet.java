@@ -2,7 +2,6 @@ package com.sist.controller;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -67,7 +66,7 @@ public class DispatcherServlet extends HttpServlet {
 					RequestMapping rm=m.getAnnotation(RequestMapping.class); //RequestMapping.class=> annotation 이름! 
 					if(rm.value().equals(cmd)) //rm.value()=>main/list.do
 					{
-						//m 메소드를 실행해 => invoke()
+						//m 메소드를 실행해 => invoke()=> ()에 값을 넣으면 채워줌!
 						String jsp=(String)m.invoke(obj, request, response);
 						
 						if(jsp.startsWith("redirect"))
@@ -80,8 +79,7 @@ public class DispatcherServlet extends HttpServlet {
 							//request.setAttribute있는 경우.
 							//값을 보낸다는 의미는?
 							RequestDispatcher rd=request.getRequestDispatcher(jsp);
-							rd.forward(request, response);
-							
+							rd.forward(request, response);	
 						}
 						
 						//for문을 멈춰, 사용자 요청때마다 찾고 멈춤!
