@@ -2,6 +2,7 @@ package com.sist.controller;
 
 /*
  * 패키지를 여러개 만들 경우?
+
  * 현재 package! =>  dao / vo / model 
  * 
  * 모델은 기능별로 클래스로 나누고
@@ -36,10 +37,12 @@ package com.sist.controller;
  */
 import java.util.*;
 
+// 이러한 component들을 만들어서 레고를 만들자...
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
 public class XMLParser extends DefaultHandler { //SAX파싱하기! xml을 한줄씩 읽는 방식!!
 	// 				   ======================상속 :xml을 한줄 읽을때마다 자동으로 매소드들(startElement)을 실행 시켜줌
 	
@@ -70,7 +73,7 @@ public class XMLParser extends DefaultHandler { //SAX파싱하기! xml을 한줄
 	 *  여러 개의 패키지를 넣기 때문에 list로 패키지를 가져올 예정! 
 	 */
 	public List<String> getList() {
-		return list;
+		return list; //
 	}
 	
 	

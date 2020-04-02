@@ -18,7 +18,7 @@
  * 
  * Spring 동작 과정을 실제로 만들어보기!
  * 
- * 첫번째 동작
+ * 첫번째 동작 톰캣이 WEB.XML읽고!!
  * 1.applicationContext.xml 일기
  * 	========================안에 
  *  package=> 읽기: XMLParser에서!
@@ -53,9 +53,29 @@
  *  
  *	------------------------------
  * 
- *  
- * 	
  * 
+ * -----------------------------------------------------
+ * 
+ * 	Spring Structure!
+ * 	
+ * 	DispatcherServlet (컨트롤러)
+ * 	
+ * 	D가 두개를 먼저 읽음!
+		A. WEB.XML을 읽고
+		B. APP.XML
+	
+	핸들러매핑 => app.xml을 읽고 => 읽은 데이터(패키지)를 XML PARSER에게 주고  XML PARSER가 파싱하고 패키지명을 핸들러매핑에게 다시 넘겨줌!() => 핸들러매핑에서 클래스들을 읽고  
+	COMPONENT SCAN에게 클래스 리스트를 주고 COMPONENTSACN(com.sist.model, ListModel)이 패키지에서 클래스를 찾아온다.
+	
+	COMPONENTSACAN(PROJECT4-MainClass)이 다시 핸들러에게 클래스 리스트를 주고 
+	핸들러매핑이 다시  DISPATCHER로 클래스들을 넘겨주고 D에서 메모힐당(싱글톤작업)!과  =>
+	
+	모델 처리
+	
+	VIEWRESOLVER에서  JSP 찾아줌
+
+	VIEW처리
+	 
  * 
  */
 public class main {
