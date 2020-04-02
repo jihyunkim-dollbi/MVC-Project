@@ -8,9 +8,8 @@
 </head>
 <body>
 	<center>
-		<h1>${msg }</h1>
+		<h1>home page</h1>
+		
 	</center>
-
-
 </body>
 </html>

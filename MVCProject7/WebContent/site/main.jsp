@@ -12,28 +12,31 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">WebSiteName</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li class="active"><a href="main.do">Home</a></li>
-      <li><a href="member/join.do">회원가입</a></li>
-      <li><a href="board/list.do">게시판</a></li>
-      <li><a href="movie/list.do">영화</a></li>
-      <li><a href="movie/reserve/reserve.do">영화예매</a></li>
-      <li><a href="music/music.do">음악</a></li>
-    </ul>
-  </div>
-</nav>
-  
-<div class="container">
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">WebSiteName</a>
+		</div>
+		<ul class="nav navbar-nav">
+			<li class="active"><a href="${pageContext.request.contextPath }/site/main.do">Home</a></li><!-- board를 벗어나야함 => 폴더를 상위 폴더 한개를 올라가 ../  -->
+			<li><a href="${pageContext.request.contextPath }/site/member/join.do">회원가입</a></li>
+			<li><a href="${pageContext.request.contextPath }/site/board/list.do">게시판</a></li>
+			<li><a href="${pageContext.request.contextPath }/site/movie/list.do">영화</a></li>
+			<li><a href="${pageContext.request.contextPath }/site/movie/reserve/reserve.do">영화예매</a></li>
+			<li><a href="${pageContext.request.contextPath }/site/music/music.do">음악</a></li>
+		</ul>
+	</div>
+	</nav>
 
-    
- <jsp:include page="${main_jsp }"></jsp:include>
- 
-</div>
-
+	<div class="container">
+		<div class="col-md-8">
+			<jsp:include page="${main_jsp }"></jsp:include>
+		</div>
+		<div class="col-md-4">
+			<center>
+				<h1>${side }</h1>
+			</center>
+		</div>
+	</div>
 </body>
 </html>
