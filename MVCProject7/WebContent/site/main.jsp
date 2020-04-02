@@ -17,7 +17,7 @@
 		<div class="navbar-header">
 			<a class="navbar-brand" href="#">WebSiteName</a>
 		</div>
-		<ul class="nav navbar-nav">
+		<ul class="nav navbar-nav"> <!-- ${pageContext.request.contextPath } => /MVCProject7 -->
 			<li class="active"><a href="${pageContext.request.contextPath }/site/main.do">Home</a></li><!-- board를 벗어나야함 => 폴더를 상위 폴더 한개를 올라가 ../  -->
 			<li><a href="${pageContext.request.contextPath }/site/member/join.do">회원가입</a></li>
 			<li><a href="${pageContext.request.contextPath }/site/board/list.do">게시판</a></li>

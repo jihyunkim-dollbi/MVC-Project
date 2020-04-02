@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <!-- 마이바티스 join 사용법! EmpVO & DeptVO 
+ 	
+ 	기존에는 순서별로 넘버링하여 가져왔지만 바티스에서는 컬럼명을 주어 가져옴. 순서상관x
+ 	SELECT empno, ename, hiredate, sal dname, loc
+ 	FROM emp, dept
+ 	WHERE emp.deptno=dept.deptno
+ 	
+ 	while(rs.next())
+ 	{
+ 		EmpVO vo=new EmpVO()
+ 	
+ 		vo.setEmpno(rs.getInt("empno")) => 컬럼명
+ 		vo.setEname(rs.getString("ename"))
+ 		vo.setHiredate(rs.getDate("hiredate"))
+ 		vo.setDname(rs.getString("dname"))  ==> vo.getDvo().setDname()으로 가져와야함!
+ 		vo.setLoc(rs.getString("loc"))     
+
+ 	}
+ 
+ -->
+<mapper namespace="com.sist.emp-mapper">
+	<resultMap type="EmpVO" id="empMap">
+		<result column="empno" property="empno"/> <!-- 이 컬럼에 이 값을 채워 -->
+		<!-- vo.setEmpno =>property(rs.getInt("empno"))=> 컬럼  -->
+		<result column="ename" property="ename"/>
+		<result column="job" property="job"/>
+		<result column="mgr" property="mgr"/>
+		<result column="hiredate" property="hiredate"/>
+		<result column="sal" property="sal"/>
+		<result column="comm" property="comm"/>
+		<result column="deptno" property="deptno"/>
+		<result column="dname" property="dvo.dname"/>
+		<result column="loc" property="dvo.loc"/>
+	</resultMap>
+	<select id="empAllData" resultMap="empMap"> <!-- 매핑@@! -->
+		SELECT empno, ename, job, hiredate, sal, dname, loc
+		FROM emp, dept
+		WHERE emp.deptno=dept.deptno
+	</select>
+</mapper> 
+
+
+
+
+
+
+ 
