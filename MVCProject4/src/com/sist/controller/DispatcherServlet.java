@@ -174,8 +174,8 @@ public class DispatcherServlet extends HttpServlet {
 		System.out.println("가공한 cmd?"+cmd); // *
 		
 		
-		//사용자 요청 처리하기 => 해당 model찾기
-		Model model=(Model)clsMap.get(cmd); //요청위해 class찾음
+		//사용자 요청 처리하기 =>사용자uri에  해당하는 model찾기
+		Model model=(Model)clsMap.get(cmd); //요청위해 modelclass찾음=>여기서 찾았다면 model&dao처리 완료한 것!?????????????????????????????????????
 		
 		//요청 처리하기
 		//model.handlerRequest(request); //처리된 결과를 request에 넣음
@@ -201,7 +201,7 @@ public class DispatcherServlet extends HttpServlet {
 		else
 		{
 			//값 전송하기!
-			RequestDispatcher rd=request.getRequestDispatcher(jsp); //getRequestDispatcher사용자가 request보낸것 받기
+			RequestDispatcher rd=request.getRequestDispatcher(jsp); //getRequestDispatcher: 사용자가 request보낸것 받기
 			rd.forward(request, response);			
 		}
 		
