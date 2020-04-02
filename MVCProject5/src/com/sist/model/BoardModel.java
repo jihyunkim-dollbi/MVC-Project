@@ -130,14 +130,13 @@ public class BoardModel {
 		
 		}catch(Exception ex) {}
 		
-		
+	
 	}
 	
 	@RequestMapping("board/update.do")
 	public void boardUpdateData(HttpServletRequest request, HttpServletResponse response)
 	{
-		
-	
+
 			String no=request.getParameter("no");
 			
 			BoardVO vo=BoardDAO.boardUpdateData(Integer.parseInt(no));
@@ -147,7 +146,7 @@ public class BoardModel {
 	}
 	
 	@RequestMapping("board/update_ok.do")
-	public void boardUpdate(HttpServletRequest request, HttpServletResponse response)
+	public String boardUpdate(HttpServletRequest request, HttpServletResponse response)
 	{
 		
 		
@@ -192,6 +191,7 @@ public class BoardModel {
 			
 		}catch(Exception ex) {}
 		
+		return "redirect:list.jsp";
 		
 		
 	}
