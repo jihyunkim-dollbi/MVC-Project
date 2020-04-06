@@ -18,12 +18,12 @@ public class ComponentScan {
 		//String path="C:\\Users\\sist\\git\\repository13\\MVCProject5\\src";
 			
 		path=path+"\\"+pack.replace(".","\\"); //pack => C:\Users\sist\git\repository13\MVCProject5\src\com\sist\controller
-		//																								====================
+		//스트링																							====================
 		
 		//확장자가 .java인 것만 가져오기!
 		//가져간 파일들을 D에서 @찾아서 처리
 		
-		File dir=new File(path); //파일에 directory읽음
+		File dir=new File(path); //파일에 directory읽음 => 스트링을 파일객체로 바꾸고
 		
 		File[] files=dir.listFiles();//전체파일 읽음(클래스파일)
 		for(File f:files)

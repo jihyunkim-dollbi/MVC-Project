@@ -28,6 +28,7 @@ public class HandlerMapping { //handlerMapping : 모델 찾는 기능!
 			//pList에는 패키지명칭들이 들어가있음! =>compo에게 넘겨
 			
 			ComponentScan cs=new ComponentScan();//가져옴
+			
 			for(String pack:pList)
 			{
 				List<String> fNames=cs.getClassNameRead(pack,defaultPath); //1패키지 개수대로 

@@ -37,7 +37,7 @@ public class DispatcherServlet extends HttpServlet {
 		
 		//conponent에서 클래스 찾기위한 작업한 것을 가져와서
 		//여기서 메모리할당!
-		String cmd=request.getRequestURI(); //  main/main.do
+		String cmd=request.getRequestURI(); //  main/main.do 		new1.do 
 		
 		cmd=cmd.substring(request.getContextPath().length()+1);
 		System.out.println("cmd: "+cmd); //*.do
@@ -68,7 +68,7 @@ public class DispatcherServlet extends HttpServlet {
 					{
 						//m 메소드를 실행해 => invoke()=> ()에 값을 넣으면 채워줌!
 						
-						String jsp=(String)m.invoke(obj, request, response);
+						String jsp=(String)m.invoke(obj, request, response); // return "../main.jsp";
 						System.out.println("jsp: "+jsp); //jsp: list.jsp
 						
 						if(jsp.startsWith("redirect"))
