@@ -46,13 +46,16 @@ public class Controller extends HttpServlet {
 		//방법1
 	//	String cmd=request.getParameter("cmd"); //사용자로부터 요청받은 값?
 		//자바에서 list.jsp(페이지)로 바로 값을 넘겨줬던 예전 방식과 달리 ==> mvc방식에서는model(자바)을 거치고 controller로 값을 최종적으로 보내줘야 jsp로 연결될 수있다.
-		
+		 
 		//방법2
 		String uri=request.getRequestURI();
+                // getRequestURI(); =>  프로젝트/폴더/파일.***  경로 가져옴
 		// uri = /MVCProject1/*.do => 잘라와서 list, detail, insert를 구하기 위함!앞으로 아래와 같이 jsp로 찾지 않기 위함.
-		//request.getContextPath() => /MVCProject1
-		//요청받기
-		//요청받기 => 처리 =>model(request.setttribute()로 값을 넣어주는 것 만들어놓음..) 한개 호출!
+		
+                //request.getContextPath() => /MVCProject1 => 프로젝트 패스만 받아온다.
+		
+
+		//요청받기 => 처리 =>model(request.setAttribute()로 값을 넣어주는 것 만들어놓음..) 한개 호출!
 	//	String cmd=uri.substring(request.getContextPath().length()+1,uri.lastIndexOf("."));
 		String cmd=uri.substring(uri.lastIndexOf("/")+1,uri.lastIndexOf(".")); // *
 		String jsp=uri.substring(request.getContextPath().length(),uri.lastIndexOf("."));  // /*
