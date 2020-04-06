@@ -1,6 +1,7 @@
 package com.sist.board.model;
 
 import javax.servlet.http.HttpServletRequest;
+
 import javax.servlet.http.HttpServletResponse;
 
 import com.sist.common.model.CommonData;
