@@ -19,6 +19,33 @@ h2 {
 }
 
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+var index=2;
+$(function(){
+	$('#add').click(function(){
+		//태그를 첨부할 수있다..
+		$('#user-table').append( //추가해라..
+			'<tr id="f'+index+'">'
+			+'<td>'
+			+'파일'+(index)+':'
+			+'<input type=file size=20>'
+			+'</td>'
+			+'</tr>'
+		)
+		index=index+1;
+	})
+	$('#cancel').click(function(){
+		if(index>1)
+			{
+				$('#f'+(index-1)).remove()
+				index=index-1;
+			}
+		
+	})
+})
+
+</script>
 </head>
 <body>
 	<div class="container">
@@ -67,8 +94,8 @@ h2 {
 							</tr>
 						</table>
 						<table class="table" id="user-table">
-							<tr>
-								<td>파일1:<input type=file size=15 id=f1 ></td>
+							<tr id=f1>
+								<td>파일1:<input type=file size=15></td>
 							</tr>
 						</table>
 						

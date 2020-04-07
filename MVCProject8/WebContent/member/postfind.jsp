@@ -20,7 +20,6 @@
 //jquery는 항상 function이 있어야 동작=main함수!
 // findBtn을 눌렀을때 dom을 보내줌
 /*
- * 
  	//값을 읽을때 (getter)
  	<input type=text id="id"> ==> $('#id').val() => 입력한 값을 가져올떄
 	<td>aaa</td>  ==> $('td').text() => td태그 사이에 값을 가져올때   ====> getter!
@@ -54,12 +53,15 @@ $(function(){
 			//get방식이니 post방식이니  
 			type:'POST',
 			url:'../member/postfind_result.do', //누구에게 보낼거니
-			data:{"dong":dong}, //보낼 데이터가 있어? dong을 보내 db를 검색해 뿌려줘야...//json으로
+			data:{"dong":dong}, //보낼 데이터가 있어? dong을 보내 db를 검색해 뿌려줘야...
 			//데이터를 보냄!
 			//정상수행 & 실패시
 			success:function(result){
 				console.log("여기까지 됐음");
-				var div=$('#result').html(result); //#result ==> 검색결과를 id="result"에(postfind) 넣음!! => db에서 가져온 값 html(result)을 아래에 모두 첨부할 예정!
+				var div=$('#result').html(result);  //HTML() 경우 그 전의 데이터는 모두 지워지고 새로운 내용을 가져옴! APPEND는 지워지지 않음. 
+				//#result ==> 검색결과를 id="result"에(postfind) 넣음!! => db에서 가져온 값 html(result)을 아래에 모두 첨부할 예정!
+				//이미 출력한 HTML을 모두 가져옴 => AJAX에선 출력전 XML파일을 파싱하여 바로 출력하는 프로그램으로 해야한다. => 따라서 화면의 깜빡거림없이 기존의 데이터를 움직이지 않고(DB에 연동안고)
+				//화면상에서 XML을 파싱하여 처리!
 			},
 			error:function(request,status,error)
 			{
