@@ -9,7 +9,7 @@ public class RecipeVO implements Serializable{
     private String poster;
     private String chef;
     private String link;
-    
+   
 	public int getNo() {
 		return no;
 	}

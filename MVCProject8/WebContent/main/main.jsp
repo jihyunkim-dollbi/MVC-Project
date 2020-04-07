@@ -30,10 +30,10 @@ body{
         <li class="active"><a href="../main/main.do">Home</a></li>
         <li><a class="drop" href="#">회원</a>
           <ul>
-            <li><a href="pages/gallery.html"></a></li>
-            <li><a href="pages/full-width.html">아이디찾기</a></li>
-          	<li><a href="pages/gallery.html">비밀번호찾기</a></li>
-            <li><a href="pages/full-width.html">회원탈퇴</a></li>
+            <li><a href="../member/join.do">회원가입</a></li>
+            <li><a href="..">아이디찾기</a></li>
+          	<li><a href="..">비밀번호찾기</a></li>
+            <li><a href="..">회원탈퇴</a></li>
           </ul>
         </li>
         <li><a class="drop" href="#">레시피</a>

@@ -8,6 +8,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+
+.table, td {
+	background-color: white;
+
+}
+
+</style>
 </head>
 <body>
 <div class="wrapper row2">
