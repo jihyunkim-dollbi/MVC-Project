@@ -1,6 +1,6 @@
 package com.sist.controller;
 
-// request 초기화!
+// request  초기화!
 // 세션은 서버안에 자리가 존재하므로 여기에 저장되지 않고 서버에 저장되므로 사라지지 않는다.
 // 쿠키는 내 컴퓨터에 저장되므로 가져올 수 있다.
 import java.io.IOException;

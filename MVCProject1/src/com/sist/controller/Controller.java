@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sist.model.*;
 
 //@WebServlet("/Controller")
-@WebServlet("*.do") //확장자 변경가능 => * => 앞에 어떤 단어여도 ok!
+@WebServlet("*.do") // 확장자 변경가능 => * => 앞에 어떤 단어여도 ok!
 //list.do insert.do detail.do =>모두 이 해당 controller를 호출하기 위함!!
 
 public class Controller extends HttpServlet {

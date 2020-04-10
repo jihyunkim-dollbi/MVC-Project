@@ -4,7 +4,7 @@ package com.sist.controller;
 
 2020 03 30
 
-MVC 구조란?
+MVC  구조란?
 
 사용자 request => Controller []=> model1, model2, model3,  … =>  DAO
 
