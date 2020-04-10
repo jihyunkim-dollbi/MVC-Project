@@ -5,7 +5,7 @@
  
   <%--
   	
-  	fmt => format(number, date)
+  	fmt =>  format(number, date)
   
    --%>
   

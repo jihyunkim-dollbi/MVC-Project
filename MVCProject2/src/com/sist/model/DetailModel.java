@@ -15,7 +15,7 @@ public class DetailModel implements Model {
 		
 		BoardVO vo=BoardDAO.boardDetailData(Integer.parseInt(no));
 		
-		//detail.jsp전송 vo를 넘겨줌!
+		// detail.jsp전송 vo를 넘겨줌!
 		request.setAttribute("vo", vo);
 		
 		return "board/detail.jsp"; //forward!!

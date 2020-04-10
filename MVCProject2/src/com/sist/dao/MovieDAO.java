@@ -11,7 +11,7 @@ public class MovieDAO {
 	private PreparedStatement ps;
 	private final String URL="jdbc:oracle:thin:@localhost:1521:XE";
 	
-	//드라이버 등록 생성자
+	//드라이버  등록 생성자
 	public MovieDAO()
 	{
 		

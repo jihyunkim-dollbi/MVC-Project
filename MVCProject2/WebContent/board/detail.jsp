@@ -2,7 +2,7 @@
     pageEncoding="UTF-8" %>
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!--날짜 변환 하려고! 숫자=> $,원 표기할때, 100,000 표기할때 등등-->
+<!--날짜 변환 하려고! 숫자=> $, 원 표기할때, 100,000 표기할때 등등-->
 
 
     

@@ -8,7 +8,7 @@ public class InsertModel implements Model {
 	public String execute(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 
-		return "board/insert.jsp"; //스프링과 같은 모양 => 실행을 한 후에 jsp파일 리턴!
+		return "board/insert.jsp"; // 스프링과 같은 모양 => 실행을 한 후에 jsp파일 리턴!
 	}
 
 }

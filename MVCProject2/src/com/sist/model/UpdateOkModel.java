@@ -15,7 +15,7 @@ public class UpdateOkModel implements Model {
 		
 		try{
 				
-			//request에 값을 담을 수 있는 이유는 JSP에 doget, dopost 에서 request와 response를 매개변수로 하는 메소드를 갖고 있기때문에
+			// request에 값을 담을 수 있는 이유는 JSP에 doget, dopost 에서 request와 response를 매개변수로 하는 메소드를 갖고 있기때문에
 			//자바에서도 request와 response를 매개변수로 사용 가능하다!
 			//JSP파일에서 사용자가 입력한 값을 HttpServletRequest request, HttpServletResponse response) 
 			//위의 request와 response를 통해 받는다!

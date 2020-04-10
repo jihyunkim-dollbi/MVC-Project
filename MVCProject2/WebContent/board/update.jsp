@@ -27,7 +27,7 @@ h2 {
 </head>
 <body>
 	<div class="container">
-		<h2>수정하기</h2>
+		<h2>수정 하기</h2>
 		<div class="row">
 			<form method=post action="update_ok.do"> 
 		

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.sist.dao.*, java.util.*"%>
     
-    <!-- attr()로 패키지명까지 읽어옴.... , 메모리할당!-->
+    <!-- attr()로  패키지명까지 읽어옴.... , 메모리할당!-->
     <jsp:useBean id="dao" class="com.sist.dao.MovieDAO"></jsp:useBean>
     
     <%

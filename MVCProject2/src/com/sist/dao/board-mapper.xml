@@ -5,7 +5,6 @@
 	Mapper 안에는
 	PreparedStatment, ResultSet 기능! 
 	
-	
 -->
 <!DOCTYPE mapper
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -13,23 +12,44 @@
 <mapper namespace="com.sist.dao.board-mapper"><!-- namespace => package명시 -->
 <!--  (cache-ref | cache | resultMap* | parameterMap* | sql* | insert* | update* | delete* | select*)+ -->
 <!-- 
-	목록 읽어올때 => select!
-	public BoardVO boardListData(Map map)
+	목록 읽어올때, 가지고 있는 값을 가져올때 => select!사용!
+	DAO 예1)
+	public BoardVO boardListData(Map map){
 	
-	public int movieTotalPage()
-	resultType="int" parameterType="x-> 매개변수x"
-				리턴형				매개변수!
+	}
+	리턴형 => resultType => BoardVO
+	매개변수 => parameterType => hashmap
 	
 	
-	Map map=new Hashmap();
-	map.put("start",1)
-	map.put("end",10)
+	public int movieTotalPage(){
 	
+	}
+	리턴형 => resultType="int" 
+	매개변수 => parameterType=> 없음!
+
+	
+	매개변수에 들어갈 수 있는 경우의 변수형
+	1)int
+	2)String
+	3)vo
+	4)hashmap
+	5)...
+	
+	HashMap이라는 것은 저장될때 키와 값이 함께 저장된다!
+	Key has to be unique.
+	Value can be NULL.
+	
+	Map map=new Hashmap(); //맵 객체를 생성하고
+	예1) map.put("start",1)
+	예2) map.put("end",10)
+	
+	아래와 같은 이치!
 	ps.setInt(1, start);  ==  map.get("start")
 	ps.setInt(2, end);  ==  map.get("end")
 	
-	순서와 상관없이 key값을 매칭을 시켜주면된다.
-	#{start} == map.get("start")
+	마이바티스에서는 
+	테이블의 컬럼 순서와 상관없이 key값을 매칭을 시켜주면된다.
+	#{start} == map.get("start") #{blah} => blah는 사용자로부터 받은 값!
 	 key명을 줘야한다. ?없다.
 	#{end}   == map.get("end")
 	
