@@ -19,7 +19,7 @@
  				2) MANAGED 			
  			-->
  			<dataSource type="POOLED">
- 			<!-- 데이터베이스의 모든 정보 => DataSource => DEFAULT!
+ 			<!-- 데이터베이스의  모든 정보 => DataSource => DEFAULT!
  				 = UNPOOLED : 연결/해제를 수행할 때마다
  				 = POOLED : CONNECTION POOL => 재사용=> 반환!(주소를 얻고 반환하기)(maxActive(8), maxIdle(8))
  				 = JNDI

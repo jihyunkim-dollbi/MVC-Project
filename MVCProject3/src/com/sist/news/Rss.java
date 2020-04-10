@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * JAXP : PARSING => JAVA API FOR XML PARSE(설정 파일 읽기용- myBatis-SAX파싱, Spring-SAX파싱!) 
  * 					1) DOM (Document Object Model) => 메모리에 저장(수정, 삭제 , 추가 가능)
  * 					2) SAX (Simple Api for XML) => 읽기 전용!
- * JAXB : BIND => JAVA API FOR XML BINDING =>Annotation 이용하는 프로그램!(bid data용) 
+ * JAXB : BIND =>  JAVA API FOR XML BINDING =>Annotation 이용하는 프로그램!(bid data용) 
  * 			   => 마샬 ==> Java class에 있는 데이터를 xml로 변환!
  * 			   => 언마샬 ==> xml 을 java object로 변환!
  * 

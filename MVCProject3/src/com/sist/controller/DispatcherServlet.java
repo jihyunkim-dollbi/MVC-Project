@@ -29,7 +29,7 @@ public class DispatcherServlet extends HttpServlet {
 	
 		String path=config.getInitParameter("contextConfigLocation"); // 파일읽기
 		System.out.println(path); // => web.xml에 등록시켜놓음
-		//C:\Users\sist\git\repository12\MVCProject3\WebContent\WEB-INF\config\applicationContext.xml
+		// C:\Users\sist\git\repository12\MVCProject3\WebContent\WEB-INF\config\applicationContext.xml
 		
 		try{
 			

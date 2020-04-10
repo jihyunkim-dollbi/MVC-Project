@@ -1,5 +1,5 @@
 package com.sist.news;
-//item 50 개를 가져올 예정!
+//item  50 개를 가져올 예정!
 //계층 구조를 갖고 있기때문에 ...
 public class Item {
 	

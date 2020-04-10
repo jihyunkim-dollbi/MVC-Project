@@ -4,7 +4,7 @@
  * MVC
  * 
  * 분리 MODEL-VIEW & 연결!- CONTROLLER
- * DAO => 공통모듈(여러개 클래스에서 공통으로 사용)
+ * DAO =>  공통모듈(여러개 클래스에서 공통으로 사용)
  * 
  * 1 MODEL(BUSINESS LOGIC) & 1 VIEW(PRESENTATION LOGIC) => CONTROLLER에서 매칭 시켜놓기!
  * 

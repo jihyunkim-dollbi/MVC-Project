@@ -12,7 +12,7 @@ public class NewsManager {
 
 	public List<Item> newsAllData(String fd)
 	{
-		//사용자가 입력하면 'fd' =>입력한 값을 가져올예정!
+		// 사용자가 입력하면 'fd' =>입력한 값을 가져올예정!
 		List<Item> list=new ArrayList<Item>();
 		
 		try{

@@ -11,12 +11,12 @@
 
 <mapper namespace="com.sist.dao.food-mapper"><!-- 패키지명+파일명 -->
 	  <select id="categoryListData" resultType="CategoryVO">
-	  	SELECT * FROM category
+	  	SELECT * FROM category 
 	  </select>
 	  <select id="middleListData" resultType="FoodVO" parameterType="int">
 	  	SELECT no, title, address, tel, image, score 
 	  	FROM foodhouse
-	  	WHERE cno=#{cno} <!-- ? = #{cno} --> 
+	  	WHERE cno=#{cno} <!--  ? = #{cno} --> 
 	  </select>
 	  <select id="detailData" resultType="FoodVO" parameterType="int">
 	  	SELECT * FROM foodhouse

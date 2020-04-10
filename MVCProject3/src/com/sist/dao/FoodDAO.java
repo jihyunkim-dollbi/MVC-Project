@@ -20,7 +20,7 @@ public class FoodDAO {
 				//xml읽기
 				Reader reader=Resources.getResourceAsReader("Config.xml");
 				
-				//xml 파싱 요청
+				//xml 파싱  요청
 				ssf=new SqlSessionFactoryBuilder().build(reader);
 				//id를 읽고 sel~ 문장 처리함
 				

@@ -11,7 +11,7 @@ public class NewsModel implements Model {
 	public String handlerRequest(HttpServletRequest request) {
 
 		try{
-			//한글 받을 준비
+			//한글  받을 준비
 			request.setCharacterEncoding("UTF-8");
 			
 			

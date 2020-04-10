@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div class="container">
-		<h1 class="text-center">믿고 보는 맛집 리스트</h1>
+		<h1 class="text-center">믿고  보는 맛집 리스트</h1>
 			<div class="row">
 			<c:forEach var="vo" items="${list}">
 				<div class="col-md-4">
