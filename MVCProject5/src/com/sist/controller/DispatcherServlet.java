@@ -20,7 +20,7 @@ public class DispatcherServlet extends HttpServlet {
 	
 	public void init(ServletConfig config) throws ServletException {
 		
-		//path읽기 web.xml에서 aap.xml의 path
+		//path읽기  web.xml에서 aap.xml의 path
 		//경로명 읽어서 핸들러매핑한테 보내주기-path
 		
 		String path=config.getInitParameter("contextConfigLocation");//경로 읽음! 

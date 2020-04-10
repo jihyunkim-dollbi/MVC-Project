@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target(METHOD)
 public @interface RequestMapping {
 
-	//구분문자 주기
+	//구분문자  주기
 	public String value();
 	
 }

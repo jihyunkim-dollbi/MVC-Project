@@ -8,7 +8,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class HandlerMapping { //handlerMapping : 모델 찾는 기능!
 
-	//xmlparer에서 패키지명을 가져와
+	//xmlparer에서  패키지명을 가져와
 	//전달 받은 패키지에서 클래스네임을 읽고 list로 담아서 dispatcher로 보낼 예정! => D 여기서 싱글톤으로 메모리 할당하여 저장해놓고 사용할 예정!!
 	private List<String> list=new ArrayList<String>(); //리스트 공간 만들고. =>아래서 패키지에서 찾은 크래스들을 여기에넣을얘정!
 	

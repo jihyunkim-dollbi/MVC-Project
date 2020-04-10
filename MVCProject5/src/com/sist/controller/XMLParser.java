@@ -48,7 +48,7 @@ public class XMLParser extends DefaultHandler { //SAX파싱하기! xml을 한줄
 	
 	private List<String> list=new ArrayList<String>();
     
-	@Override // defaultHandler를 상속했기때문에 override할 수 있다.
+	@Override //  defaultHandler를 상속했기때문에 override할 수 있다.
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
 
 		

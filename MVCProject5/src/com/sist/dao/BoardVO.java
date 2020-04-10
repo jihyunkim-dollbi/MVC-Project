@@ -1,7 +1,7 @@
 package com.sist.dao;
 import java.util.*;
 /*
- * 컬럼명 = 변수명 반드시 같아야한다.
+ * 컬럼명 =  변수명 반드시 같아야한다.
  * myBtis에서 db에서 읽은 컬럼명과 같은 변수명에 값을 넣어주기 때문에!
  */
 

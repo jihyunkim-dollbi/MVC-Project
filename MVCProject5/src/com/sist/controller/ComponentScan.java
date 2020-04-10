@@ -4,7 +4,7 @@ import java.util.*;
 import java.io.*;
 public class ComponentScan {
 
-	//자바로 만든 리스트
+	// 자바로 만든 리스트
 	public List<String> getClassNameRead(String pack, String path){ //패키지명과 path를 받아
 		
 		List<String> list=new ArrayList<String>(); //

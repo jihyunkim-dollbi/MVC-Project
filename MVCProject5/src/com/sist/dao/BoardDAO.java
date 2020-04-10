@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.log4j.lf5.util.Resource;
 /*	
- * <자바>
+ * <자바 >
  * 
  * 	클래스의 구성요소 : 자바는 클래스 영역에 모두 들어가야한다.
  * =============

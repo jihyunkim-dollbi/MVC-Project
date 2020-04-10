@@ -24,7 +24,7 @@ public class BoardModel {
 			page="1";
 		
 		int curpage=Integer.parseInt(page);
-		//자바는 자바대로 html은html대로
+		//자바는  자바대로 html은html대로
 		
 		int rowSize=10;
 		int start=(rowSize*curpage)-(rowSize-1);

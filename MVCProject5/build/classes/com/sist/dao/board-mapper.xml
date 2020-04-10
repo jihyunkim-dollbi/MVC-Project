@@ -28,7 +28,7 @@
 	ps.setInt(1, start);  ==  map.get("start")
 	ps.setInt(2, end);  ==  map.get("end")
 	
-	순서와 상관없이 key값을 매칭을 시켜주면된다.
+	순서와 상관없이   key값을 매칭을 시켜주면된다.
 	#{start} == map.get("start")
 	 key명을 줘야한다. ?없다.
 	#{end}   == map.get("end")
