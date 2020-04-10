@@ -3,7 +3,7 @@
  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
- <!-- 마이바티스 join 사용법! EmpVO & DeptVO 
+ <!-- 마이바티스 join  사용법! EmpVO & DeptVO 
  	
  	기존에는 순서별로 넘버링하여 가져왔지만 바티스에서는 컬럼명을 주어 가져옴. 컬럼을 이용해 값을 넣을 수 있다, 순서상관x
  	SELECT empno, ename, hiredate, sal dname, loc

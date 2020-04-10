@@ -20,7 +20,7 @@
 				<th>입사일</th>
 				<th>급여</th>
 				<th>부서명</th>
-				<th>근무지</th>
+				<th>근무지 </th>
 			</tr>
 			<c:forEach var="vo" items="${list }">
 			<tr>

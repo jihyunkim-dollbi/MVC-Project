@@ -18,7 +18,7 @@ import com.sist.*;
 @Controller
 public class BoardModel {
 
-	@RequestMapping("site/board/list.do") // cmd: 7/site/board/list.do
+	@RequestMapping("site/board/list.do") // cmd:7/site/board/list.do
 	public String board_list(HttpServletRequest request, HttpServletResponse response)
 	{
 		//request.setAttribute("msg", "자유게시판");
