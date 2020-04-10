@@ -33,6 +33,6 @@ public class MainModel {
 		request.setAttribute("count", count);
 		request.setAttribute("fvo", fvo);
 	
-		return "../main/main.jsp"; // 기준이 되는 폴더는 어디로 이동하던, 항상 webContent까지 나온 후에 => 목적지로 이동 한다.!
+		return "../main/main.jsp"; //  기준이 되는 폴더는 어디로 이동하던, 항상 webContent까지 나온 후에 => 목적지로 이동 한다.!
 	}
 }

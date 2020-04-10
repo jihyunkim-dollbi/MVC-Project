@@ -47,7 +47,7 @@ $(function(){
 				$('#dong').focus(); //빈칸일 경우 커서 다시 입력창에 놓기!
 				return;
 			}
-		//alert(dong);   .do?dong=신촌 과 동일!
+		// alert(dong);   .do?dong=신촌 과 동일!
 		$.ajax({//서버로 보내서 데이터 읽어오는 것을 동시에 할 예정!
 			
 			  

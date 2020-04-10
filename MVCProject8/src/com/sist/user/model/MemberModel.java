@@ -123,16 +123,25 @@ public class MemberModel {
 	 * 				 
 	 */
 	
+	
+	
+	/*이 모델에서는 회원의 로그인 처리를 한다.
+	 * id와 pwd를 비교하고
+	 * 
+	 * 
+	 */
+	
 	@RequestMapping("member/login.do")
 	public String member_login(HttpServletRequest request, HttpServletResponse response)
 	{
-		//INPUT에서 받은 값 가져오기
+		//input에서 받은 값 가져오기
 		String id=request.getParameter("id");  //getparameter는 name을 읽어옴!
 		String pwd=request.getParameter("pwd");
 		
 		//DAO연결 => MAPPER로 고고1 ==> dao작성
 		//결과값을 여기로 보내라고 return 하는 것!
 		
+		//came back from memberLogin(String id, String pwd)
 		//dao연결하여 값 가져오기
 		MemberVO vo=MemberDAO.memberLogin(id, pwd); //세션에 4개의 값을 저장하려고 vo에 저장하여 vo넘김!
 		if(vo.getMsg().equals("OK")) //ok이면 세션에 등록하여 모든 Jsp에서 사용할 예정!

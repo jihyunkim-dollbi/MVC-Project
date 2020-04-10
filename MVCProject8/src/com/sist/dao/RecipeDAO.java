@@ -6,7 +6,7 @@ import com.sist.vo.*;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 /*
- * 요청 ==> 리퀘스트 이용 => DS에서 받음!(SERVICE()호출!)=> 리퀘스트 전송 => MODEL(recipeListData(request))처리 <=====> DAO데이터연결!
+ * 요청 ==>  리퀘스트 이용 => DS에서 받음!(SERVICE()호출!)=> 리퀘스트 전송 => MODEL(recipeListData(request))처리 <=====> DAO데이터연결!
  * 
  * DAO에서 받은 값을 리퀘스트에 추가(ADDATTRIBUTE)==>MODEL ==>  DS ====> RESOLVER => 해당 JSP로 REQUEST전송(forward(request)) => 메모리에 출력=> 사용자가 브라우저에서 읽음!
  * request.setAttribute()
@@ -229,7 +229,9 @@ public class RecipeDAO {
 			}
 		
 		
-
+			//레시피 검색하는 dao!
+			//사용자로부터 fd를 받음!
+			//mapper에서 사용되는 ss는 우리가 가진 컬럼! 
 			public static List<RecipeVO> recipeFindData(String fd){ // parameterType="java.util.Map"
 				
 				SqlSession session=null;

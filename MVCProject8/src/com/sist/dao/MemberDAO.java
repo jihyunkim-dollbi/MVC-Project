@@ -86,7 +86,7 @@ public class MemberDAO {
 		
 	}
 	
-	//cameback from mapper id="idCount", getPwd
+	//cameback  from mapper id="idCount", getPwd
 	public static MemberVO memberLogin(String id, String pwd)
 	{
 		  MemberVO vo=new MemberVO();

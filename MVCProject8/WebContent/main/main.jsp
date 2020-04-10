@@ -19,8 +19,9 @@ body{
 <script type="text/javascript">
 $(function(){
 	
-	$('#logBtn').on('click',function(){
-		let id=$('#id').val();
+	//로그인 처리
+	$('#logBtn').on('click',function(){ //로그인 버튼 클릭했다면
+		let id=$('#id').val(); //
 		if(id.trim()=="")
 			{
 				$('#id').focus();
@@ -172,14 +173,14 @@ $(function(){
 			<c:if test="${sessionScope.id==null }"> <!-- sessionScope는  -->
 				<form method="post" action="../member/login.do" id="log_frm">
 					<input type=text size=10 class="input-sm" placeholder="ID" style="display: inline-block;"
-					id="id" name="id"> 
+					id="id" name="id"> <!-- placeholder => 빈칸에 입력 전에 입력해야 될 값을 미리 출력해줌! -->
 					&nbsp; 
 					<input type=password size=10 class="input-sm" placeholder="Password" style="display: inline-block;"
 					id="pwd" name="pwd"> 
 					<input type=button class="btn btn-sm btn-info" value="로그인" style="display: inline-block;"
 					id="logBtn">
 				</form>
-				<!-- 데이터를 보내야하기 때문에 submitx -->
+				<!-- 데이터를 보내야하기 때문에 submit -->
 			</c:if>
 			<!-- 로그인 되어있는 경우 -->
 			<c:if test="${sessionScope.id!=null }">

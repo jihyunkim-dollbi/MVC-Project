@@ -142,17 +142,20 @@ public class ReplyBoardModel {
 		return "../main/main.jsp";
 	}
 	
-	/*update로직!
-	 * 사용자 요청이 이루어지는 곳에서부터 시작 => detail.jsp에서 사용자는 수정 버튼을 누를 것이다.
+	
+	
+	
+	/* 수정하기 - UPDATE 프로그램 로직 쩜쩜쩜...
+	 * 생각해보자!
+	 * 사용자 요청이 이루어지는 곳에서부터 모든 프로그램은 시작 된다! => detail.jsp에서 사용자는 "수정" 버튼을 누를 것이다.
+	 * 수정 버튼을 누르는 순간 DispatcherServlet은 버튼에 정의된 여행 프로그램을 따라 먼 바다로 떠나게 될 것이다.
 	 * 
-	 * 1.
+	 * 먼저 상상을 해보자 사용자가 수정 버튼을 눌렀을 경우 나타나게될 화면 첫번째는 내가 입력했던 화면 
+	 *  
 	 * 
 	 * 
 	 * 
 	 */
-	
-	
-	
 	
 	@RequestMapping("reply/password_check.do") 
 	public String reply_password_check(HttpServletRequest request, HttpServletResponse response){

@@ -27,7 +27,20 @@
 		 'n'
 		)
 	</insert>
-	
+		
+	<!-- 회원 로그인  처리부분
+		 1.id="idCount" => id에 로그인을 처리하는 sql의 유일한 이름을 부여한다. => 후에 DAO에서 사용예정! 
+		 2. parameterType="String" => id와 pwd를 String으로 받을 것이기 때문이며 => DAO(DB연동:사용자가 준 값을 넣고 그 값을 이용해서 DB에서 값을 가져오는 부분!)에서도 매개변수로 동일하게 작용
+		 3. resultType="int" => 결과값을 DAO에서 int로 받을 것이기 때문이다.
+		 4. COUNT(*) => 해당 테이블의 모든 행의 갯수를 구하는 함수 ex) COUNT(name) => name 컬럼의 행 갯수를 가져온다!
+		 	(추가: DISTINCT => 특정 컬럼이 가진 값의 중복을 제거하여 가져온다.)
+		 5. id => 테이블에 있는 컬럼! 
+		 6. #{id} => 사용자로부터 받은 값!
+		 
+		 따라서 idCount는
+		 사용자로부터 받은 id값이 테이블에 저장된 id일때 모든 행의 갯수를 구해오는 select문이다
+		 	
+	 -->
 	<select id="idCount" resultType="int" parameterType="String">
 		SELECT COUNT(*) FROM member
 		WHERE id=#{id}

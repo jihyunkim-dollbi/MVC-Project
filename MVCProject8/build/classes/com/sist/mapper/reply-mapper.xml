@@ -18,10 +18,20 @@
 	<!-- 최신부터 가져오는데 답변 순서대로 가져와라 그룹이 새글 올릴때마다 ID가 증가됨! -->
 	<!-- 찾기 이름, 제목, 내용으로 찾기 게시판에서..
 	     3개 주제중 한개 선택후 검색할 내용 입력
-	     	fs => 컬럼명주어 name like(subject like, content like) fs, ss => 실제 데이터
+	     	fs => 컬럼명 주어 name like(subject like, content like) 
+	     	ss => 실제로 사용자가 입력한 값!
 	     	fs를 map에 실어서 가져올예정
 	     	컬럼명,테이블명, 뷰명 은 반드시 $을 주어야한다. 
 	     	일반데이터 를 줄때는  #을 주어야한다.
+	     
+	     	***
+	     	추가로 #{value}, ${value}의 차이는
+			#은 ''(작은 따옴표)가 붙는 형태, 예를 들어 컬럼명 = '문자열'처럼 사용할 때 쓰고 => 이말인 즉슨!=> '사용자로부터 받은값'
+			#{~~}=> #{}은 JSP로 부터 받은 값!!
+			$은 ''가 붙지 않는다고 한다. => 컬럼명,테이블명,뷰명 찾을때! ==> 따라서, ${}은 실제로 테이블에서 사용중인 실제 데이터를 의미한다.
+			따라서, ${} 안에 올수있는 것은 선생님이 오늘 말씀 하셨듯이! 단 3개만 올 수있다. 컬럼명, 테이블명, 뷰명!
+			예를들어 select * from ${value} => 여기서 value는 테이블명이 되는 것!
+
 	 -->
 	<select id="replyFindData" resultType="BoardVO" parameterType="hashmap">
 		SELECT no, subject, name, regdate, hit
@@ -41,7 +51,7 @@
 	private String pwd;
 	private Date regdate;
 	private int hit;
-	//////아래 묻고답하기!
+	//////아래  묻고답하기!
 	private int group_id;
 	private int group_step;
 	private int group_tab;

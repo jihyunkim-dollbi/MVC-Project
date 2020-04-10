@@ -36,7 +36,7 @@ public class RecipeModel {
 	public String recipe_recipe(HttpServletRequest request, HttpServletResponse response)
 	{
 		
-		//List<RecipeVO> list=RecipeDAO.recipeListData(map);
+		// List<RecipeVO> list=RecipeDAO.recipeListData(map);
 		
 		//페이지가져오기
 		String page=request.getParameter("page");

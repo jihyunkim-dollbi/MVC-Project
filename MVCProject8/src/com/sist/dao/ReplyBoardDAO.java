@@ -34,8 +34,8 @@ public class ReplyBoardDAO {
 			list=session.selectList("replyListData", map); //이 문장을 읽어서 
 			/*
 			 * 1)sql
-			 * 2)preparedstatement => 채우기
-			 * 		ps.setstring(1,"")
+			 * 2)preparedstatement => ps에 채워서 sql로 감!!
+			 * 	 ps.setstring(1,"")
 			 * 3)~vo
 			 * 
 			 * list=session.selectList("replyListData" => 키, map =>값);
@@ -114,7 +114,7 @@ public class ReplyBoardDAO {
 		}finally{
 			
 			if(session!=null)
-				session.close(); // 커넥션을 반환해야한다.
+				session.close(); //  커넥션을 반환해야한다.
 		}
 		return vo;
 		

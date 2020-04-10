@@ -96,10 +96,9 @@ h2 {
 					<input type="password" name=pwd size=10 id=pwd2>
 					
 					<div id="result"></div>
-					<!--제이쿼리부분! -->
+					<!--제이쿼리 부분! -->
 					</td>
 				</tr>
-				
 				<tr>
 					<td class="text-center" colspan="2">
 					<input type="submit" value="수정" class="btn btn-sm btn-primary"
@@ -112,6 +111,5 @@ h2 {
 			</form>
 		</div>
 	</div>
-
 </body>
 </html>

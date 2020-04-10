@@ -79,7 +79,7 @@ $(function(){
 			success:function(result){ //정상수행(200), result(보내주는 형태)=>xml(getJSON으로 파싱하기), html, json, CSV파일! 
 				
 				let count=result.trim(); //읽어왔을때 문자열로 읽었기때문에 정수형으로 변환, Number or parseInt, 결과값을 정수형 0 or 1로만 받을 예정! db에서 count를 사용하여 개수를 받아올 것!
-				//dckeck_result.do의 값이 0일때, 1일때!
+				// dckeck_result.do의 값이 0일때, 1일때!
 				if(count==0) //일치하는 id 없음 => 사용 가능!
 				{
 					let msg='<font color=blue><b>'+id+'는(은) 사용 가능합니다</b></font>';

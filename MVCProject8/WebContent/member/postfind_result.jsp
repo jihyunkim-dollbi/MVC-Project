@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!-- ajax 부분  postfind에서 버튼을 누르면 서버에 갔다가 여기에 출력한 것을 postfind에서 출력할 예정!!-->
+<!-- ajax 부분  postfind에서 버튼을 누르면  서버에 갔다가 여기에 출력한 것을 postfind에서 출력할 예정!!-->
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 

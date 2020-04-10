@@ -59,7 +59,7 @@ $(function(){
 		 Shadowbox.open({
 			content:'../member/idcheck.do',//어떤 화면을 띄울지
 			title:'아이디중복체크',
-			player:'iframe',//어떤식으로 띄울거니 html안에html띄울거..
+			player:'iframe',// 어떤식으로 띄울거니 html안에html띄울거..
 			width:390,
 			height:200
 		 })
