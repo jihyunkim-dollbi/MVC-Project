@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target(METHOD)
 public @interface RequestMapping {
 /*
- * 메소드 어노테이션!
+ *  메소드 어노테이션!
  * 메소드마다 이름을 부여해야한다...
  * 메소드는 무엇일때 무엇인지를 확인해야한다. 사용자가 요청할때마다 사용을 할 것이기때문에..
  * @RequestMapping("main.do") main.do가 들어오면 아래 메소드를 실행하라! => main.do: value값을 가져온다. 

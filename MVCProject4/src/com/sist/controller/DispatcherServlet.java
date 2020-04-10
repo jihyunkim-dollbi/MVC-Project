@@ -30,7 +30,7 @@ import org.w3c.dom.*;
  * @ => TYPE, 클래스 구분 => 클래스 찾기 ==>@Controller, @Repository, @Component , @Service => 4개가 올라가면 메모리할당을 하겠다!
  * 									모델 구분		 dao구분	           일반 클래스 구분		manager구분(외부자료)\
  * 
- * 이렇게 구분해 놓아야 찾을때 쉽다.
+ * 이렇게  구분해 놓아야 찾을때 쉽다.
  * 
  * public class A
  * {

@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 @Target(TYPE)
 public @interface Controller {
 /*
- * source, class 프로그램 종료시 메모리 삭제!
+ * source,  class 프로그램 종료시 메모리 삭제!
 
 runtime 프로그램 종료시까지 메모리를 저장해
 

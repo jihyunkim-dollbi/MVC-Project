@@ -64,7 +64,7 @@ public class MainClass2 {
 		}
 		if(uri.equals("b.do"))
 		{
-			a.bbb();
+			 a.bbb();
 			
 		}
 		if(uri.equals("c.do"))
