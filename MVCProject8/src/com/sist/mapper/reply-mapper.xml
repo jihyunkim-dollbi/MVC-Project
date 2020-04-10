@@ -62,7 +62,7 @@
 		WHERE no=#{no}
 	</update>
 	<insert id="replyBoardInsert" parameterType="BoardVO">
-		<selectKey keyProperty="no" resultType="int" order="BEFORE"> <!-- selectkey no처리먼저 아래처럼 nvl처리 해주고 insert처리해라!!  before준 이유는 selectkey를 실행하고 insert를 수행하라는 의미"order" -->
+		<selectKey keyProperty="no" resultType="int" order="BEFORE"> <!--   selectkey no처리먼저 아래처럼 nvl처리 해주고 insert처리해라!!  before준 이유는 selectkey를 실행하고 insert를 수행하라는 의미"order" -->
 		SELECT NVL(MAX(no)+1,1) as no FROM replyBoard 
 		</selectKey>
 		INSERT INTO replyBoard(no,name,subject, content, pwd, group_id) 

@@ -103,7 +103,7 @@ h2 {
 				<tr>
 					<td class="text-center" colspan="2">
 					<input type="submit" value="수정" class="btn btn-sm btn-primary"
-					id="updateBtn" disabled><!-- 비활성화 시켜놓음! -->
+					id="updateBtn" disabled><!-- 비활성화  시켜놓음! -->
 					<input type="button" value="취소" class="btn btn-sm btn-danger"
 					onclick="javascript:history.back()"> <!--취소버튼 눌렀을때  다시 돌아가기!-->
 					</td>

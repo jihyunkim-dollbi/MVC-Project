@@ -16,7 +16,7 @@
 </head>
 <body>
 		<div class="container">
-		<h2 class="text-center">내용보기</h2>
+		<h2 class="text-center">내용 보기</h2>
 		<div class="row">
 			<table class="table">
 				<tr>

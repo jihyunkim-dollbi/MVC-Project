@@ -2,7 +2,7 @@ package com.sist.vo;
 import java.util.*;
 
 public class BoardVO {
-	//vo 한개로 자유게시판과 묻고답하기를 모두 사용!
+	//vo 한개로 자유게시판과 묻고  답하기를 모두 사용!
 	private int no;
 	private String name;
 	private String subject;

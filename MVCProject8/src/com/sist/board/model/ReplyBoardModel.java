@@ -192,7 +192,7 @@ public class ReplyBoardModel {
 			
 		}catch(Exception ex){}
 		
-		//사용자가 보내준 값..
+		// 사용자가 보내준 값..
 		String no=request.getParameter("no");
 		String name=request.getParameter("name");
 		String subject=request.getParameter("subject");

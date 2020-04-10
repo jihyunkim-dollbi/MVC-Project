@@ -62,7 +62,7 @@ h2 {
 					<td class="text-center" colspan="2">
 					<input type="submit" value="글쓰기" class="btn btn-sm btn-primary">
 					<input type="button" value="취소" class="btn btn-sm btn-danger"
-					onclick="javascript:history.back()"> <!--취소버튼 눌렀을때  다시 돌아가기!-->
+					onclick="javascript:history.back()"> <!--취소  버튼 눌렀을때  다시 돌아가기!-->
 					</td>
 				</tr>
 			</table>

@@ -25,7 +25,7 @@
 						<th width="10%" class="text-center">번호</th>
 						<th width="45%" class="text-center">제목</th>
 						<th width="15%" class="text-center">이름</th>
-						<th width="20%" class="text-center">작성일</th>
+						<th width="20%" class="text-center">작성 일</th>
 						<th width="10%" class="text-center">조회수</th>
 					</tr>
 					<c:forEach var="vo" items="${list }">
