@@ -128,5 +128,132 @@ public class RecipeDAO {
 
 		}
 		
+		//id="recipeListData"에서 이미 no값으로 vo를 받아놨음!
+		public static RecipeDetailVO recipeDetailData(int no){
+			
+			RecipeDetailVO vo= new RecipeDetailVO();
+			
+			SqlSession session=null;
+			try{
+				session=ssf.openSession();
+				vo=session.selectOne("recipeDetailData", no); //vo한개 가져오므로 selectone()
+				
+			}catch(Exception ex)
+			{
+				System.out.println("recipeDetailData(): "+ ex.getMessage());
+				
+			}finally
+			{
+				if(session!=null)
+					session.close();
+			}
+			return vo;
+		}
+		
+		
+		public static int recipeCount(int no)
+		{
+			
+			SqlSession session=null;
+			int total=0;
+			
+			try{
+				
+				session=ssf.openSession();
+				total=session.selectOne("recipeCount2",no);
+				
+			}catch(Exception ex)
+			{
+				System.out.println("chefTotalPage():" + ex.getMessage());
+				
+			}finally
+			{
+				if(session !=null)
+					session.close();
+			}
+			
+			return total;
+		}
+		
+		
+		
+		public static List<RecipeVO> chefDetailData(Map map){ // mapper에서 chef 받음!
+			
+			SqlSession session=null;
+			List<RecipeVO> list=new ArrayList<RecipeVO>();
+			
+			try{
+				
+				session=ssf.openSession();
+				list=session.selectList("chefDetailData",map);
+				
+			}catch(Exception ex)
+			{
+				System.out.println("chefDetailData():" + ex.getMessage());
+				
+			}finally
+			{
+				if(session !=null)
+					session.close();
+			}
+			
+			
+			return list;
+		}
+
+			public static int chefDataTotalPage(String chef)
+			{
+				
+				SqlSession session=null;
+				int total=0;
+				
+
+				try{
+					
+					session=ssf.openSession();
+					total=session.selectOne("chefDataTotalPage", chef);
+					
+				}catch(Exception ex)
+				{
+					System.out.println("chefDataTotalPage():" + ex.getMessage());
+					
+				}finally
+				{
+					if(session !=null)
+						session.close();
+				}
+				
+				
+				return total;
+
+			}
+		
+		
+
+			public static List<RecipeVO> recipeFindData(String fd){ // parameterType="java.util.Map"
+				
+				SqlSession session=null;
+				List<RecipeVO> list=new ArrayList<RecipeVO>();
+				
+				try{
+					session=ssf.openSession();
+					Map map=new HashMap();
+					map.put("fd", fd);
+					//fd를 넣은 map을 recipeFindData에 수행하여 list에 값을 넣음!!  
+					list=session.selectList("recipeFindData",map);				
+					
+				}catch(Exception ex)
+				{
+					System.out.println("recipeFindData():" + ex.getMessage());
+		
+				}finally
+				{
+					if(session !=null)
+						session.close();
+				}
+				return list;
+			}
+		
+			
 		
 }

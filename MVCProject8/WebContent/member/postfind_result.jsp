@@ -41,9 +41,6 @@ $(function(){
 	});
 	
 });
-
-
-
 /*
 function ok(zip, addr)
 {	//join.jsp= parent로 값을 보내
@@ -54,7 +51,6 @@ function ok(zip, addr)
 		
 }
 */
-
 </script>
 </head>
 <body>
@@ -67,7 +63,6 @@ function ok(zip, addr)
 			</tr>
 		</table>
 	</c:if>
-	
 	<c:if test="${count!=0 }">
 		<table class="table">
 			<tr class="success">

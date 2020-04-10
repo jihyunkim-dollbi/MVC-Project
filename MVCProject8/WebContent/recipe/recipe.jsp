@@ -18,8 +18,8 @@
 				<c:forEach var="vo" items="${list }">
 					<div class="col-md-3">
 						<div class="thumbnail">
-							<a href="#"> <img src="${vo.poster }" alt="Lights"
-								style="width: 100%">
+							<a href="../recipe/recipe_detail.do?no=${vo.no }"> 
+							<img src="${vo.poster }" alt="Lights" style="width: 100%">
 								<div class="caption">
 									<p>${vo.title }</p>
 									<p>

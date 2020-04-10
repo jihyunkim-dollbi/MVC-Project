@@ -6,4 +6,34 @@
 		FROM zipcode
 		WHERE dong LIKE '%'||#{dong}||'%'
 	</select>
+	<select id="idcheckData" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM member
+		WHERE id=#{id}
+	</select>
+	<insert id="memberInsert" parameterType="MemberVO"><!-- 컬럼 순서대로 값을 넣어야한다. -->
+		INSERT INTO member VALUES(
+		 #{id},
+		 #{pwd},
+		 #{name},
+		 #{email},
+		 #{sex},
+		 #{birthday},
+		 #{post},
+		 #{addr1},
+		 #{addr2},
+		 #{tel},
+		 #{content},
+		 SYSDATE,
+		 'n'
+		)
+	</insert>
+	
+	<select id="idCount" resultType="int" parameterType="String">
+		SELECT COUNT(*) FROM member
+		WHERE id=#{id}
+	</select>
+	<select id="getPwd" resultType="MemberVO" parameterType="String">
+		SELECT pwd, name, admin FROM member
+		WHERE id=#{id} 
+	</select>
 </mapper>

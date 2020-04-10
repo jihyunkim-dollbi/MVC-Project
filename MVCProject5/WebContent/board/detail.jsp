@@ -42,9 +42,10 @@
 				</tr>
 				<tr>
 					<td class="text-right" colspan="4">
-						<a href="update.do?no=${vo.no }" class="btn btn-xs btn-success">수정</a> 
+						<a href="#" class="btn btn-xs btn-success">답변</a>
+						<a href="../reply/update.do?no=${vo.no }" class="btn btn-xs btn-success">수정</a> 
 						<a href="#" class="btn btn-xs btn-info">삭제</a>
-						<a href="list.do" class="btn btn-xs btn-warning">목록</a>
+						<a href="../reply/list.do" class="btn btn-xs btn-success">목록</a>
 					</td>
 				</tr>
 			</table>

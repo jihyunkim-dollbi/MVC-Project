@@ -15,6 +15,67 @@ body{
   font-family: 맑은 고딕;
 }
 </style>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	$('#logBtn').on('click',function(){
+		let id=$('#id').val();
+		if(id.trim()=="")
+			{
+				$('#id').focus();
+				return;
+			}
+			let pwd=$('#pwd').val();
+			if(pwd.trim()=="")
+			{
+				$('#pwd').focus();
+				return;
+			}
+			
+		//$('#log_frm').submit();
+		
+		$.ajax({ //로그인 처리
+		
+			type:'post',
+			url:'../member/login.do',
+			data:{"id":id, "pwd":pwd},
+			success:function(res){  //login으로 보낸 msg값을 읽어서 NOID, NOPWD, 그 외 처리를 해준다.
+				if(res.trim()=='NOID')
+				{
+					alert("아이디가 존재하지 않습니다.")	
+					$('#id').val("");
+					$('#pwd').val("");
+					$('#id').focus();
+					
+				}else if(res.trim()=='NOPWD')
+				{
+					alert("비밀번호가 틀립니다.")	
+				    $('#pwd').val("");
+				    $('#pwd').focus();
+						
+				}else
+				{
+					location.href="../main/main.do";
+					
+				}	
+				
+			},
+			error:function(e){
+				
+				alert(e)
+				
+			}
+		
+		})
+
+		
+	})
+	
+})
+
+</script>
+
 </head>
 <body id="top">
 
@@ -22,7 +83,7 @@ body{
   <header id="header" class="clear"> 
     <!-- ################################################################################################ -->
     <div id="logo" class="fl_left">
-      <h1><a href="index.html">SIST Recipe & Food</a></h1>
+      <h1><a href="../member/join.do">SIST Recipe & Food</a></h1>
     </div>
     <!-- ################################################################################################ -->
     <nav id="mainav" class="fl_right">
@@ -30,10 +91,19 @@ body{
         <li class="active"><a href="../main/main.do">Home</a></li>
         <li><a class="drop" href="#">회원</a>
           <ul>
-            <li><a href="../member/join.do">회원가입</a></li>
-            <li><a href="..">아이디찾기</a></li>
-          	<li><a href="..">비밀번호찾기</a></li>
-            <li><a href="..">회원탈퇴</a></li>
+          <c:if test="${sessionScope.id==null }">
+            	<li><a href="../member/join.do">회원가입</a></li>
+           </c:if>
+           <c:if test="${sessionScope.id!=null }">
+            	<li><a href="../member/join_update.do">회원수정</a></li>
+           </c:if>
+            <c:if test="${sessionScope.id==null }">
+            	<li><a href="..">아이디찾기</a></li>
+          		<li><a href="..">비밀번호찾기</a></li>
+          	</c:if>
+          	<c:if test="${sessionScope.id!=null }">
+            	<li><a href="..">회원탈퇴</a></li>
+            </c:if>
           </ul>
         </li>
         <li><a class="drop" href="#">레시피</a>
@@ -42,7 +112,7 @@ body{
             <li><a class="drop" href="#">쉐프</a>
               <ul>
                 <li><a href="../recipe/chef.do">쉐프  목록</a></li>
-                <li><a href="#">레시피 찾기</a></li>
+                <li><a href="../recipe/recipe_find.do">레시피 찾기</a></li>
               </ul>
             </li>
           </ul>
@@ -56,21 +126,35 @@ body{
             <li><a href="#">음식점</a></li>
           </ul>
         </li>
+        <c:if test="${sessionScope.id!=null && sessionScope.admin=='n'}">
         <li><a class="drop" href="#">예약하기</a>
           <ul>
             <li><a href="#">호텔예약</a></li>
             <li><a href="#">맛집예약</a></li>
           </ul>
         </li>
+        </c:if>
         <li><a class="drop" href="#">커뮤니티</a>
           <ul>
+          <c:if test="${sessionScope.id!=null }">
             <li><a href="#">자유게시판</a></li>
-            <li><a href="#">묻고답하기</a></li>
+  		  </c:if>
+            <li><a href="../reply/list.do">묻고답하기</a></li>
+            <%--
+            	reply/list.do ==> DS(CONTROLLER => 요청을 제어 응답제어) = > MODEL검색 => 메소드 찾기(어노테이션(RM)) 
+            	우리가 할 일은 (MODEL => DAO연결=> 요청처리(MODEL))해서 해당 JSP(결과값 출력(VIEW))에 결과값 전송!
+            			
+             --%>
             <li><a href="#">자료실</a></li>
           </ul>
         </li>
         <li><a href="#">공지사항</a></li>
-        <li><a href="#">마이페이지</a></li>
+        <c:if test="${sessionScope.id!=null && sessionScope.admin=='n' }">
+        	<li><a href="#">마이페이지</a></li>
+        </c:if>
+          <c:if test="${sessionScope.id!=null && sessionScope.admin=='y' }">
+        	<li><a href="#">예약현황</a></li>
+        </c:if>
         
       <!--   
         <li><input type=text size=8 class="input-sm" placeholder="ID" style="display: inline-block;"></li>
@@ -83,13 +167,32 @@ body{
  </header>
  </div>
   <div class="row1">
-  	<div id="clear" style="margin-left: 1250px">
- 	 	<input type=text size=10 class="input-sm" placeholder="ID" style="display: inline-block;">
- 	 	&nbsp;
- 	 	<input type=password size=10 class="input-sm" placeholder="Password" style="display: inline-block;">
- 	 	<input type=button class="btn btn-sm btn-info" value="로그인">
-  	</div>
-</div>
+		<div id="clear" style="margin-left: 1250px">
+		<!-- 로그인이 아닌 경우 -->
+			<c:if test="${sessionScope.id==null }"> <!-- sessionScope는  -->
+				<form method="post" action="../member/login.do" id="log_frm">
+					<input type=text size=10 class="input-sm" placeholder="ID" style="display: inline-block;"
+					id="id" name="id"> 
+					&nbsp; 
+					<input type=password size=10 class="input-sm" placeholder="Password" style="display: inline-block;"
+					id="pwd" name="pwd"> 
+					<input type=button class="btn btn-sm btn-info" value="로그인" style="display: inline-block;"
+					id="logBtn">
+				</form>
+				<!-- 데이터를 보내야하기 때문에 submitx -->
+			</c:if>
+			<!-- 로그인 되어있는 경우 -->
+			<c:if test="${sessionScope.id!=null }">
+				<form method="post" action="../member/logout.do">
+					<span style="display: inline-block;">
+						<font color="blue">${sessionScope.name }</font>
+						(${sessionScope.admin=='y'?"관리자":"일반 사용자"})님 로그인중입니다</span> 
+						<input type=submit class="btn btn-sm btn-info" value="로그아웃" style="display: inline-block;">
+				</form>
+				<!-- submit하게 되면 session값이 모두 사라짐! null로 바뀜! 위로 가게됨!  -->
+			</c:if>
+		</div>
+	</div>
 <div style="height: 30px"></div>
 <!-- ################################################################################################ -->
 <!-- ################################################################################################ -->

@@ -51,6 +51,7 @@
  	 	<typeAlias type="com.sist.vo.FoodVO" alias="FoodVO"/>
  	 	<typeAlias type="com.sist.vo.MemberVO" alias="MemberVO"/>
  	 	<typeAlias type="com.sist.vo.ZipcodeVO" alias="ZipcodeVO"/>
+ 	 	<typeAlias type="com.sist.vo.BoardVO" alias="BoardVO"/>
  	 </typeAliases>
   	 <environments default="development"><!-- 환경설정:오라클 연결 정보  (environment)+ => 한번 이상은 사용해야함!=> 환경은 여러개 사용가능!오라클,myBatis, 마리아db등등.. -->
   	 	<environment id="development"><!-- 개발환경 만들겠다!(transactionManager,dataSource) 두개를 모두 써야함! -->
@@ -93,6 +94,7 @@
  	 	<mapper resource="com/sist/mapper/recipe-mapper.xml"/>
  	 	<mapper resource="com/sist/mapper/main-mapper.xml"/>
  	 	<mapper resource="com/sist/mapper/member-mapper.xml"/>
+ 	 	<mapper resource="com/sist/mapper/reply-mapper.xml"/>
  	 </mappers>
  </configuration>
  

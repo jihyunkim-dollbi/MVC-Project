@@ -29,20 +29,23 @@
 								<c:forEach var="vo" items="${list }">
 									<table class="table">
 										<tr>
-											<td width="30%" class="text-center" rowspan="2"><img
-												src="${vo.poster }" class="img-circle" style="width:80px; height:80px">
+											<td width="30%" class="text-center" rowspan="2">
+												<a href="../recipe/chef_detail.do?name=${vo.chef }">
+												<img src="${vo.poster }" class="img-circle" style="width:80px; height:80px"></a>
 											</td>
-											<td colspan="4"><h3><font color="#FC8">${vo.chef }</font></h3></td>
+											<td colspan="4"><h3><font color="#FC8">
+											<a href="../recipe/chef_detail.do?name=${vo.chef }">${vo.chef }</a></font></h3>
+											</td><!-- /recipe/chef_detail.do => .do => DS 호출함!자바처리!model찾음=> @requsetMapping메소드 처리!-->
 										</tr>
 										<tr>
-											<td class="text-center"><img src="image/1.png">
-												${vo.mem_cont1 }</td>
-											<td class="text-center"><img src="image/3.png">
-												${vo.mem_cont3 }</td>
-											<td class="text-center"><img src="image/7.png">
-												${vo.mem_cont7 }</td>
-											<td class="text-center"><img src="image/2.png">
-												${vo.mem_cont2 }</td>
+											<td class="text-center">
+												<img src="image/1.png">	${vo.mem_cont1 }</td>
+											<td class="text-center">
+												<img src="image/3.png">${vo.mem_cont3 }</td>
+											<td class="text-center">
+												<img src="image/7.png">${vo.mem_cont7 }</td>
+											<td class="text-center">
+												<img src="image/2.png">	${vo.mem_cont2 }</td>
 										</tr>
 									</table>
 								</c:forEach>

@@ -5,6 +5,7 @@ package com.sist.vo;
 
 /*
  * 
+ * FOODHOUSE!
 NO      NOT NULL NUMBER         
 CNO              NUMBER         
 TITLE   NOT NULL VARCHAR2(500)  
@@ -37,6 +38,7 @@ public class FoodVO {
 	private int soso;
 	private int bad;
 	private String tag;
+	
 	public int getNo() {
 		return no;
 	}

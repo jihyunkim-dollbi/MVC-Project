@@ -33,4 +33,46 @@ MEM_CONT2          VARCHAR2(100)
 	<select id="chefTotalPage" resultType="int">
 		SELECT CEIL(COUNT(*)/30.0) FROM chef
 	</select>
+	<select id="recipeDetailData" resultType="RecipeDetailVO" parameterType="int"> <!--no를 foreign key로 해놨기 때문에 모두 가져올 수 있.. -->
+		SELECT * 
+		FROM recipe_detail
+		WHERE no=#{no}
+	</select>
+	<select id="recipeCount2" resultType="int" parameterType="int">
+		SELECT COUNT(*)
+		FROM recipe_detail
+		WHERE no=${no}
+	</select>
+	
+	<!-- NO     NOT NULL NUMBER         
+TITLE  NOT NULL VARCHAR2(500) 
+POSTER NOT NULL VARCHAR2(1000) 
+CHEF   NOT NULL VARCHAR2(500)  
+LINK            VARCHAR2(500)  
+	 -->
+	 <!-- CHEF클릭하면 쉐프가 만든 레시피들 보여줄 예정! -->
+	<select id="chefDetailData" resultType="RecipeVO" parameterType="java.util.Map">
+		SELECT no,title, poster,chef, num 
+		FROM (SELECT no, title, poster, chef, rownum as num <!-- NULL값이 있는 경우 * X -->
+		FROM (SELECT no, title, poster, chef
+		FROM recipe WHERE chef LIKE '%' || #{chef}||'%')) <!-- 레시피에 쉐프명에 by+chef명으로 되어있어서.. -->
+		WHERE num BETWEEN #{start} AND #{end} <!-- 가장 마지막 문장이 실질적으로 가져오는 문장, 가장 겉의 문장이 먼저 수행하여 가져온 문장을 자르거나 다시 정제하는 과 -->
+	</select>
+	<!-- 해당 쉐프의 페이지에서 페이징하기 위해 .. -->
+	<select id="chefDataTotalPage" resultType="int" parameterType="String">
+	  	SELECT CEIL(COUNT(*)/20.0) FROM recipe <!-- 쉐프마다 갖고있는 레시피개수가 다르기 때문에 총페이지를 구해서 페이지를 줄 예정!  -->
+	  	WHERE chef LIKE '%'||#{chef}||'%' <!-- 레시피에 쉐프명에 by+chef명으로 되어있어서.. -->
+	</select>
+	<!--  -->
+	<select id="recipeFindData" resultType="RecipeVO" parameterType="java.util.Map">
+		SELECT no,title, chef,poster, rownum
+		FROM recipe
+		WHERE rownum &lt;=21
+		<if test="fd!='전체'"><!-- 검색어가  fd(변수명)로 들어옴 -->
+		<!-- 	AND title LIKE '%'||#{fd}||'%' --><!-- 검색어가 fd인 것이 아닌경우 그 검색어를 찾아 가져올예정! -->
+		<!-- REGEXP_LIKE(정규식!)=> |를 넣어주면 모두 찾아줌  : 면|우동  ==> 면과 우동 모두 찾음! REGEXP_LIKE(title,'면')
+											REGEXP_LIKE(title,'면|우동|라면')-->
+		AND REGEXP_LIKE(title,#{fd}) 
+		</if>
+	</select>
 </mapper>
