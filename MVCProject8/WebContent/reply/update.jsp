@@ -19,7 +19,7 @@ $(function(){
 		
 			type:'post',
 			url:'../reply/password_check.do',
-			data:{"pwd":k,"no":no},
+			data:{"pwd":k,"no":no}, //보낼데이터
 			success:function(res){//0또는 1의 값을 가지는 res/
 				//@RequestMapping("reply/password_check.do") 여기서 res받음 
 				console.log(res)

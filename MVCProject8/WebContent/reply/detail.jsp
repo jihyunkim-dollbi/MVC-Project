@@ -10,14 +10,14 @@
 
 
 
-</script>
-
-
 </head>
 <body>
-		<div class="container">
-		<h2 class="text-center">내용 보기</h2>
-		<div class="row">
+	<div class="wrapper row2">
+ 	 <div id="services" class="clear"> 
+  	  <div class="row text-center">
+   	  <img src="reply.png">
+   	 </div>
+   	 <div class="row">
 			<table class="table">
 				<tr>
 					<th class="text-center danger" width=20%>게시물번호</th>
@@ -43,9 +43,9 @@
 				</tr>
 				<tr>
 					<td class="text-right" colspan="4">
-						<a href="#" class="btn btn-xs btn-success">답변</a>
-						<a href="../reply/update.do?no=${vo.no }" class="btn btn-xs btn-success">수정</a> 
-						<a href="#" class="btn btn-xs btn-info">삭제</a>
+						<a href="../reply/reply.do?no=${vo.no }" class="btn btn-xs btn-primary">답변</a>
+						<a href="../reply/update.do?no=${vo.no }" class="btn btn-xs btn-danger">수정</a> 
+						<a href="../reply/delete.do?no=${vo.no} " class="btn btn-xs btn-info">삭제</a>
 						<a href="../reply/list.do" class="btn btn-xs btn-success">목록</a>
 					</td>
 				</tr>
@@ -54,5 +54,6 @@
 		
 		</div>
 	</div>
+</div>	
 </body>
 </html>

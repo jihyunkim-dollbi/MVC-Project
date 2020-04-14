@@ -13,6 +13,7 @@ import com.sist.vo.*;
 @Controller //DS가 메모리할당!
 public class ReplyBoardModel {
 
+	//각각의 request는 jsp에서 보내준 각각 다른 사용자가 보내준 정보를 갖고있다. 여기는 page정보를 받았다.
 	@RequestMapping("reply/list.do") // 구분자이기떄문에 폴더명과 파일명 중복되지 않도록
 	public String reply_list(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -68,9 +69,6 @@ public class ReplyBoardModel {
 		 * 2) Model(우리가 만드는 모델) => Controller
 		 * 3) View => JSP
 		 * 4) Model => request
-		 * 
-		 * 
-		 * 
 		 */
 		
 		request.setAttribute("main_jsp", "../reply/list.jsp");
@@ -216,8 +214,96 @@ public class ReplyBoardModel {
 	}
 	
 	
-	
+	@RequestMapping("reply/reply.do")
+	public String reply_reply(HttpServletRequest request, HttpServletResponse response)
+	{
+		request.setAttribute("main_jsp", "../reply/reply.jsp"); //메인으로 가서 키를 찾아 값은 이걸로 대입해=> 인클루드!!
+		//일단 화면 붙였는지 확인하러 고고!
+		
+		//
+		String pno=request.getParameter("no"); //받아놓고 입력하고 확인버튼 눌렀을때 _ok로 no넘어감
+		request.setAttribute("pno", pno); // 이 아이 위에 상위 번호의 넘버이다 답변이기 떄문에 parent no아래 붙을 예정!
+		//이 아이 밑에 붙여랴..
+		//이 아이의 넘버생성은 insert하면서 만들어짐!따라서 부모 넘버를 알고있어야한다.
+		
 
+		//입력창 띄워야=> 화면에 출력(인클루드) => 메인에 입력창은 include되어있음
+		return "../main/main.jsp";
+	}	// _ok는  redirect로!
 	
+	
+	
+	@RequestMapping("reply/reply_ok.do")
+	public String reply_reply_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		//reply.do에서 넘겨준 자료를 db로 보내는 작업
+		try{
+			
+			request.setCharacterEncoding("UTF-8");
+			
+		}catch(Exception ex){}
+		
+		//reply.jsp에서 <form method=post action="../reply/reply_ok.do"> 으로 hidden으로 pno넘겨줌!
+		//사용자가 넘겨준 데이터 db에 넣고 list.do호출!
+		String pno=request.getParameter("pno");
+		String name=request.getParameter("name");
+		String subject=request.getParameter("subject");
+		String content=request.getParameter("content");
+		String pwd=request.getParameter("pwd");
+		
+		//받은 값을 vo에 실어서 jsp로 번송!!
+		BoardVO vo=new BoardVO();
+		vo.setName(name);
+		vo.setSubject(subject);
+		vo.setContent(content);
+		vo.setPwd(pwd);
+		
+		//pno는 자신것이 아니기 때문에 따로 ...
+		//DAO연결!
+		ReplyBoardDAO.replyReplyInsert(Integer.parseInt(pno), vo);
+		
+		//답변완료 버튼 눌렀을때 
+		return "redirect:../reply/list.do"; // @RequestMapping("reply/list.do") 처리할 예정! => 이 메소드를 다시 호출하는 것이다.
+		//request.setAttribute("main_jsp", "../reply/list.jsp);를 하지 않는 이유는 위의 ("reply/list.do")에서 작성한 업데이트 내용을 db와 연결하여 새로고침후 list띄우는 작업을 모두 이미 해놓았기 떄문이다.
+	}	//REDIRECT! => 메소드 재호출! 호출아니면 ==> 인클루드 시키기(값을 넘기지 않으면 인클루드 못함..)!
+		//REDIRECT가 아닌 경우는 작성한 결과값을 곧바로 출력하여 보여주는 경우! //DB에 연동하는 경우??????????
+		
+	
+	//비밀번호 입력하라는 창 delete.jsp가 나와서 pwd 입력해야 삭제 가능 예정!
+	@RequestMapping("reply/delete.do")
+	public String reply_delete(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		
+		//pwd와 no(hidden으로..)를 delete_ok로 넘겨줄예정! ==> delete_ok.do에서 redirect로 list.do! 실행! 리스트 화면 이동!
+		String no=request.getParameter("no");
+		request.setAttribute("no", no); //delete.jsp와 main.jsp 모두 사용 가능 => 다시  delete_ok로 보내서 여기서 또 에서 사용!
+		//어떤 화면 띄울지 설정
+		request.setAttribute("main_jsp", "../reply/delete.jsp");
+		
+		
+		return "../main/main.jsp"; //화면 띄우기
+	}
+	
+	
+	@RequestMapping("reply/delete_ok.do")
+	public String reply_delete_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String no=request.getParameter("no");
+		String pwd=request.getParameter("pwd");
+		
+		//DAO연결
+		//비번체크 맞으면 list , 안맞으면 back!
+		//두가지 결과  제시!
+		
+		boolean bCheck=ReplyBoardDAO.replyDelete(Integer.parseInt(no), pwd); //public static boolean replyDelete(int no, String pwd)
+		request.setAttribute("bCheck", bCheck);
+		
+		
+		return "../reply/delete_ok.jsp"; //만들러 고고
+		
+	}
 	
 }

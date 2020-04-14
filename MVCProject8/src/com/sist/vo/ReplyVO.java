@@ -1,7 +1,9 @@
 package com.sist.vo;
 import java.util.*;
 public class ReplyVO {
-
+	
+	
+	
 	//댓글 한개만 달기! 댓글의 댓글 x
 	
 	private int no;

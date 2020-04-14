@@ -191,7 +191,9 @@ public class ReplyBoardDAO {
 	
 	
 
-	public static String replyGetPassword(int no){
+	public static String replyGetPassword(int no)
+	{
+		
 		String pwd="";
 		
 		SqlSession session=null;
@@ -215,7 +217,113 @@ public class ReplyBoardDAO {
 	}
 	
 	
+	// DML 여러개 사용으로 트랜젝션 프로그램 사용!
+	public static void replyReplyInsert(int pno,BoardVO vo)
+	{
+		
+			SqlSession session=null;
+		
+		try{
 	
+			session=ssf.openSession(); //커넥해
+			
+			//상위것 가져오기 ==> replyParentInfoData 먼저 가져와야 아래모두 실행 가능
+			BoardVO pvo=session.selectOne("replyParentInfoData", pno);
+			
+			//step증가 시킴
+			session.update("replyGroupStepIncrement", pvo);
+			
+			//insert 하기 => replyReplyInsert
+			//사용자가 보내준 int vo사용하기
+			vo.setGroup_id(pvo.getGroup_id()); //부모의 id사용!
+			vo.setGroup_step(pvo.getGroup_step()+1);
+			vo.setGroup_tab(pvo.getGroup_tab()+1);
+			
+			//?
+			vo.setRoot(pno);
+			
+			//대댓글!
+			session.insert("replyReplyInsert", vo);
+			
+			// root 증가 => //pno에 대해 증가해라
+			session.update("replyDepthIncrement", pno); 
+			
+			session.commit(); //모두 정상수행하면 commit해.. 
+			
+		}
+		catch(Exception ex)
+		{
+			
+			System.out.println("replyReplyInsert(): "+ex.getMessage());
+			session.rollback(); // 하나라도 실패하면 모두 실행을 안하겠다 => 그래서 위에서 autocommit을 하지 않았다..
+			
+			
+		}
+		finally
+		{
+			
+			if(session!=null)
+				session.close(); // 커넥션을 반환해야한다.
+		}
+		
+		
+	}
+	
+	//DML 여러개 사용으로 트랜젝션 프로그램 사용!
+	public static boolean replyDelete(int no, String pwd)
+	{
+		
+			boolean bCheck=false;
+			SqlSession session=null;
+			
+			try
+			{
+				session=ssf.openSession();
+				String db_pwd=session.selectOne("replyGetPassword", no);
+				
+				//비번 맞는 경우
+				if(db_pwd.equals(pwd))
+				{
+					bCheck=true;
+					BoardVO vo=session.selectOne("replyDeleteInfoData", no); //값을 가져옴 db로부터 ...!!!!
+					if(vo.getDepth()==0)
+					{
+						//댓글이 없다
+						session.delete("replyDelete",no);
+						
+					}
+					else
+					{
+						//댓글 있는 상태
+						vo.setSubject("관리자가 삭제한 게시물 입니다.");
+						vo.setContent("관리자가 삭제한 게시물 입니다.");
+						vo.setNo(no);
+						session.update("replySubjectUpdate",vo);//해당 sql에서 3개를 가져왔으므로 위에서 3개 모두 채움
+					}
+					session.update("replyDepthDecrement", vo.getRoot()); //상위 번호(vo.getRoot())에..depth를 감소시켜라...	
+					
+				}else
+				{
+					//비번 틀린경우
+					bCheck=false;
+					
+				}
+				session.commit();
+				
+				
+			}catch(Exception ex)
+			{
+			
+				System.out.println("replyDelete(): "+ ex.getMessage());
+				
+			}finally
+			{
+				if(session!=null)
+					session.close();
+			}
+			
+			return bCheck;
+	}
 	
 	
 	

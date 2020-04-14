@@ -71,14 +71,13 @@
 		hit=hit+1
 		WHERE no=#{no}
 	</update>
-	<insert id="replyBoardInsert" parameterType="BoardVO">
+	<insert id="replyInsert" parameterType="BoardVO">
 		<selectKey keyProperty="no" resultType="int" order="BEFORE"> <!--   selectkey no처리먼저 아래처럼 nvl처리 해주고 insert처리해라!!  before준 이유는 selectkey를 실행하고 insert를 수행하라는 의미"order" -->
 		SELECT NVL(MAX(no)+1,1) as no FROM replyBoard 
 		</selectKey>
-		INSERT INTO replyBoard(no,name,subject, content, pwd, group_id) 
+		INSERT INTO replyBoard(no,name,subject, content, pwd, group_id,) 
 		VALUES(#{no},#{name},#{subject},#{content},#{pwd},
-		(SELECT NVL(MAX(group_id)+1,1) FROM replyBoard)
-		)
+		(SELECT NVL(MAX(no+1),1) FROM replyBoard))
 	</insert>
 	<!-- #{} 사용자로부터 받은 값!! -->
 	<update id="replyBoardUpdate" parameterType="BoardVO">
@@ -92,4 +91,81 @@
 		WHERE no=#{no}
 	</select>
 	
+
+	<!-- 답변과 관련되는 SQL -->
+	<!-- pno의 정보 상위 정보를 가져온다. group id, step, tab조작하기=> 3개를 동시에 받아야하니까 vo -->
+	<select id="replyParentInfoData" resultType="BoardVO" parameterType="int">
+ 		SELECT group_id, group_step, group_tab 
+ 		FROM replyBoard
+ 		WHERE no=#{no}
+	</select>
+	
+	<!--
+		 		id(새글)  step(새글아래 댓글 출력순서)  		tab(덧글들 간격)(ID가 같고 STEP 에 +1 +1 해줌)
+		AAA		2		      0							0
+		 BBB    2			  1							1
+		  CCC   2			  2(GI SORT후 GS SORT)		2
+		 GGG	2			  1							1(G와 B가 중복!따라서 위로올라갈 예정! ASC했기때문에.. 따라서==> B,G,C로 바뀔 것이다! B,C의 STEP을 각각 +1씩 해주어 G가 항상 위로 올라오도록!! A,G,B,C 순!) 
+		  //////////////////////////////////////////////////
+		DDD     1			  0							0
+		 EEE	1			  1							1
+		 ///////////////////////////////////////////////////
+		KKK		0             0							0
+			
+		ORDER BY group_id DESC, group_step ASC( 그룹별로 모으고 그다음 순서별로 나열하라)
+	
+		BOARDVO를 준이유는 대입되야하는 값은 2개 이상 따라서 결과값이 2개 이상?? => #이 두개이상 나오면..#은 우리가 갖고 있던 값을 오라클과 비교할때씀
+	 -->
+	<update id="replyGroupStepIncrement" parameterType="BoardVO">
+		UPDATE replyBoard SET
+		group_step=group_step+1
+		WHERE group_id=#{group_id} AND group_step>#{group_step}<!-- 해당 그룹에 대해서만 증가, 위에서 가져온group_id 그룹이 같고 gs가 0(새글)보다 큰값들만 +1씩 해준다 -->
+		
+	</update>
+	
+	<!-- 대댓글!!!!! no자동 증가 keypropert가 바로 밸류에 넣으려 사용함-->
+	<insert id="replyReplyInsert" parameterType="BoardVO">
+		<selectKey keyProperty="no" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(no)+1,1) as no FROM replyBoard
+		</selectKey>
+		INSERT INTO replyBoard(no,name,subject, content, pwd, group_id, group_step, group_tab, root)<!-- depth는 0디폴트 -->
+		VALUES(#{no}, #{name},#{subject}, #{content},#{pwd},
+		#{group_id}, #{group_step}, #{group_tab}, #{root})
+	</insert>
+	
+	<!-- 부모 새글의 댓글 갯수를 알려주는 depth를  올려줌 depth는 0일경우 새글 삭제 가능, 1이상일 경우 댓글 삭제 못할때 사용된다.. -->
+	<update id="replyDepthIncrement" parameterType="int">
+		UPDATE replyBoard SET
+		depth=depth+1
+		WHERE no=#{no}
+	</update>
+	<!-- pno가 들어갈 예정! -->
+	<!-- 이 메소드 들을 하나씩 모델에서 4개를 만들거나
+		dao에서 한번에 처리해서 모델 하나로 만들거나 ==> dao고고1!-->
+		
+	<!-- 삭제처리 2개를 가져와야해서 vo로 받는다 , vo가 없는 변수이면 map으로 받는다 // dept가 0일때 1이상일때 처리-->
+	<select id="replyDeleteInfoData" resultType="BoardVO" parameterType="int" >
+		SELECT root, depth 
+		FROM replyBoard
+		WHERE no=#{no}
+	</select>
+	<!-- depth0일떄 수행 -->
+	<delete id="replyDelete" parameterType="int">
+		DELETE FROM replyBoard
+		WHERE no=#{no}
+	
+	</delete>
+	<!-- 관리자 삭제 메시지? 데이터가 3개니까 VO, depth 1이상일때 처리-->
+	<update id="replySubjectUpdate" parameterType="BoardVO">
+	 	UPDATE replyBoard SET
+	 	subject=#{subject}, content=#{content}
+	 	WHERE no=#{no}
+	</update>
+	
+	<!-- depth넘버 처리 -->
+	<update id="replyDepthDecrement" parameterType="int">
+		UPDATE replyBoard SET
+		depth=depth-1
+		WHERE no=#{no}
+	</update>
 </mapper>
