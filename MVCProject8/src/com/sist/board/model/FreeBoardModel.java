@@ -136,8 +136,8 @@ public class FreeBoardModel {
 	@RequestMapping("freeboard/update.do")
 	public String freeboard_update(HttpServletRequest request, HttpServletResponse response)
 	{
-		//이 값은 누가 누가 준 것을 받은 것?
-		
+	
+		// no?
 		String no=request.getParameter("no");
 		//사용자는 no를 보냇고 vo를 받을 것
 		
