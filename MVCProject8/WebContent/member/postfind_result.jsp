@@ -41,7 +41,8 @@ $(function(){
 	});
 	
 });
-/*
+
+
 function ok(zip, addr)
 {	//join.jsp= parent로 값을 보내
 	parent.frm.post1.value=zip.substring(0,3);
@@ -50,7 +51,7 @@ function ok(zip, addr)
 	parent.Shadowbox.close();
 		
 }
-*/
+
 </script>
 </head>
 <body>

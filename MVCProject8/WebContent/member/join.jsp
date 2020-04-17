@@ -39,6 +39,7 @@ $(function(){
 			2)이벤트 발생 : *** 중심설정
 			
 	*/
+	
 	//우편번호 검색을 눌렀을때 새도박스를 띄우려함 - content(어떤 파일을 띄울거니)), iframe: 인클루드하라
 	$('#postBtn').click(function(){ // id가 postBtn을 눌렀다면 이 function을 수행하라..(따로 onclick함수를 만들필요x .click 하면 ok!)
 		
@@ -55,6 +56,7 @@ $(function(){
 		
 	})
 	
+	//id체크
 	$('#idcheckBtn').click(function(){ //id체크 버튼 눌렀을때 액션
 		 Shadowbox.open({
 			content:'../member/idcheck.do',//어떤 화면을 띄울지
@@ -65,6 +67,8 @@ $(function(){
 		 })
 		 i=1;
 	})
+	//체크 끝!!
+	
 	
 	$('#sendBtn').click(function(){ // 회원가입 누를때  위에서부터 한나씩 검사하기!
 		if(i==0) //첫번째로 아이디 중복체크 했는지 검사

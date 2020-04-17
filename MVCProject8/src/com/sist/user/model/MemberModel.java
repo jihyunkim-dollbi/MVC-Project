@@ -26,7 +26,6 @@ public class MemberModel {
 	{
 		
 		
-		
 		return "../member/postfind.jsp";
 	}
 	

@@ -287,7 +287,110 @@ public class FreeBoardDAO {
 			return vo;
 			
 		}
+		/*
+		 * CREATE OR REPLACE PROCEDURE boardUpdate(
+    
+    pNo board.no%TYPE,
+    pName board.name%TYPE,
+    pSubject board.subject%TYPE,
+    pContent board.content%TYPE,
+    pPwd board.pwd%TYPE,
+    pResult OUT VARCHAR2
+    
+		 * 
+		 */
 		
+		//수정하기- 비번 일치
+		public boolean freeboardUpdate(BoardVO vo)
+		{
+			boolean bCheck=false;
+			try{
+				
+				getConnection();
+				String sql="{CALL boardUpdate(?,?,?,?,?,?)}";
+				
+				cs=conn.prepareCall(sql);
+				
+				//?에 값을채운다.
+				
+				cs.setInt(1, vo.getNo());
+				cs.setString(2, vo.getName());
+				cs.setString(3, vo.getSubject());
+				cs.setString(4, vo.getContent());
+				cs.setString(5, vo.getPwd());
+				cs.registerOutParameter(6, OracleTypes.VARCHAR); //형일치
+				
+				//실행
+				cs.executeUpdate();
+				
+				String result=cs.getString(6); //
+				
+				bCheck=Boolean.parseBoolean(result); //result 값은 true or false일 것이다!!
+				//bcheck에 담는다@!
+				
+				
+				
+				
+				
+				
+			}catch(Exception ex){
+				
+				ex.printStackTrace();
+				
+			}finally
+			{
+				
+				disConnection();
+				
+			}
+		
+		
+			
+			return bCheck;
+		}
+		
+
+		public boolean freeboardDelete(int no, String pwd)
+		{
+			boolean bCheck=false;
+			try{
+				
+				getConnection();
+				String sql="{CALL boardDelete(?,?,?)}";
+				
+				cs=conn.prepareCall(sql);
+				
+				//?에 값을채운다.
+				
+				cs.setInt(1, no);
+				cs.setString(2, pwd);
+			
+				cs.registerOutParameter(3, OracleTypes.VARCHAR); //형일치
+				
+				//실행
+				cs.executeUpdate();
+				
+				String result=cs.getString(3); //
+				
+				bCheck=Boolean.parseBoolean(result); //result 값은 true or false일 것이다!!
+				//bcheck에 담는다@!
+
+				
+			}catch(Exception ex){
+				
+				ex.printStackTrace();
+				
+			}finally
+			{
+				
+				disConnection();
+				
+			}
+
+			return bCheck;
+		}
+		
+
 		
 		
 }
