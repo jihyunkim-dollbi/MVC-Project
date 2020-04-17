@@ -138,7 +138,7 @@ $(function(){
         <li><a class="drop" href="#">커뮤니티</a>
           <ul>
           <c:if test="${sessionScope.id!=null }">
-            <li><a href="#">자유게시판</a></li>
+            <li><a href="../freeboard/list.do">자유게시판</a></li>
   		  </c:if>
             <li><a href="../reply/list.do">묻고답하기</a></li>
             <%--

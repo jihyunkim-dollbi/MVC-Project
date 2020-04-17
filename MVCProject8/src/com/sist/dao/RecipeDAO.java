@@ -151,7 +151,7 @@ public class RecipeDAO {
 		}
 		
 		
-		public static int recipeCount(int no)
+		public static int recipeCount2(int no)
 		{
 			
 			SqlSession session=null;

@@ -20,8 +20,18 @@ public class BoardVO {
 	private String filesize;
 	private int type;
 	
+	private String dbday; //db에 입력한 날짜, 오늘것인지 아닌지 구분하기 위해
+	//테이블에 없지만 vo에만듬 => 테이블에는 알리아스로 만들어서 받음! => TO_CHAR(regdate,'YYYY'-MM-DD') as dbday
+	//테이블에 없어도 변환되는 데이터를 받아서 이렇게 vo에서 만들어서 받기
+	
 	public int getNo() {
 		return no;
+	}
+	public String getDbday() {
+		return dbday;
+	}
+	public void setDbday(String dbday) {
+		this.dbday = dbday;
 	}
 	public void setNo(int no) {
 		this.no = no;

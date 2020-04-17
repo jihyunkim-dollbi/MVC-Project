@@ -39,19 +39,33 @@ public class RecipeModel {
 		// List<RecipeVO> list=RecipeDAO.recipeListData(map);
 		
 		//페이지가져오기
+		//사용자가 있는 페이지 넘버! ex) 13페이지에 있던 5번째 글을 읽음!!
 		String page=request.getParameter("page");
+		//클릭했을때 페이지를 1번으로 해놓기
 		if(page==null)
 			page="1";
+		//받아놓은 페이지를 curpage에 놓음!
 		int curpage=Integer.parseInt(page);
 		
+		//한페이지에 20개 vo들어감!
 		int rowSize=20;
-		int start=(rowSize*curpage)-(rowSize-1);
-		int end=rowSize*curpage;
 		
+		//예를 들어 3페이지면  
+		//1~20
+		//21~40
+		//41~60
+		//start => 해당페이지에 시작되는 vo넘버!
+		int start=(rowSize*curpage)-(rowSize-1);
+		//  		(20 * 3)-(20-1)
+		//			  60    - 19  ==> 따라서 3페이지에는 41번의 vo부터 있고!
+		int end=rowSize*curpage;
+		// 		20 * 3 => 60    ==> 따라서 3페이지에는 60번 vo까지 존제한다.
 		Map map=new HashMap();
 		map.put("start", start); //여기의 값이 #{start} 와 동일!=>키 명칭과 동일!
 		map.put("end", end);
 		
+		//시작 페이지와 끝 페이지 정보를 map에 넣고 그 정보를 가지고 dao는 해당mapper에 가서 해당 41~60까지에 해당하는 vo와 넘버가 같은 것을 asc해서 가져올것
+		//따라서 모든 페이지에서는 asc로 동일한 개수를 가져오게됨!!
 		List<RecipeVO> list=RecipeDAO.recipeListData(map);
 		for(RecipeVO vo:list)
 		{
@@ -60,8 +74,7 @@ public class RecipeModel {
 			{
 				title=title.substring(0, 10).concat("...");
 				vo.setTitle(title);
-			}
-			
+			}	
 		}
 		int totalpage=RecipeDAO.recipeTotalPage();
 		
@@ -77,7 +90,7 @@ public class RecipeModel {
 			endPage=allPage; 
 		
 		//보낼 값
-		request.setAttribute("list", list);
+		request.setAttribute("list", list); //vo - list!
 		request.setAttribute("curpage", curpage);
 		request.setAttribute("totalpage", totalpage);
 		request.setAttribute("BLOCK", BLOCK);
@@ -85,18 +98,18 @@ public class RecipeModel {
 		request.setAttribute("endPage", endPage);
 		request.setAttribute("allPage", allPage);
 		request.setAttribute("main_jsp", "../recipe/recipe.jsp");
-		
-		
+
 		//요청==>처리 => dao
 		return "../main/main.jsp";
 			
 	}
+
+	
+	
 	
 	@RequestMapping("recipe/chef.do")
 	public String recipe_chef(HttpServletRequest request, HttpServletResponse response)
 	{
-		
-		
 		
 		String page=request.getParameter("page");
 		if(page==null)
@@ -150,7 +163,7 @@ public class RecipeModel {
 		//dao연결하러 mapper gogo => id="recipeListData"에서 이미 no값으로 vo를 받아놨음! 
 		//and then dao gogo!
 		//cameback from dao
-		int count=RecipeDAO.recipeCount(Integer.parseInt(no));
+		int count=RecipeDAO.recipeCount2(Integer.parseInt(no));
 		if(count!=0)
 		{
 			RecipeDetailVO vo=RecipeDAO.recipeDetailData(Integer.parseInt(no));
@@ -210,6 +223,7 @@ public class RecipeModel {
 		
 		return "../main/main.jsp"; //출력은 main에서 실행은 chef_detail에서
 	}
+	
 	
 	
 	@RequestMapping("recipe/recipe_find.do")//화면출력하는 아이

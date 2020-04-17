@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sist.mapper.recipe-mapper">
+	<!-- 사용자가 카테고리 넘버(페이지넘버curpage)를 클릭하면 해당 카테고리에는 시작vo넘버부터~ end vo 넘버까지 출력될 예정!! 
+		아래 select문에서는  start와end를 받아서 한 페이지당 no로asc 정렬된 값들을 가져오라는 sql문장!
+		아래 recipeTotalPage에서 한페이지당 20개씩 vo를 넣을 것이라는 명령문을 작성하고있다.
+	 -->
 	<select id="recipeListData" resultType="RecipeVO" parameterType="java.util.Map">
 		SELECT no, title, chef, poster, num
 		FROM (SELECT no, title, chef, poster, rownum as num
@@ -8,7 +12,7 @@
 		FROM recipe ORDER BY no ASC))	
 		WHERE num BETWEEN #{start} AND #{end}
 	</select>
-	
+	<!--  20 개로 자르는 이유는 한페이지에 20개의 vo를 출력하기 위함! -->
 	<select id="recipeTotalPage" resultType="int">
 		SELECT CEIL(COUNT(*)/20.0) FROM recipe
 	</select>
@@ -33,11 +37,13 @@ MEM_CONT2          VARCHAR2(100)
 	<select id="chefTotalPage" resultType="int">
 		SELECT CEIL(COUNT(*)/30.0) FROM chef
 	</select>
+	
 	<select id="recipeDetailData" resultType="RecipeDetailVO" parameterType="int"> <!--no를 foreign key로 해놨기 때문에 모두 가져올 수 있.. -->
 		SELECT * 
 		FROM recipe_detail
 		WHERE no=#{no}
 	</select>
+	<!-- no에 따른 vo 개수를 일부러 1인지 0인지 써치한 이유는 model에서 0이 아닌경우에dao와 연결하기 때문이다. -->
 	<select id="recipeCount2" resultType="int" parameterType="int">
 		SELECT COUNT(*)
 		FROM recipe_detail
