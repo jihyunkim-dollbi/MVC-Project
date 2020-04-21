@@ -9,15 +9,17 @@ public class MainClass {
 		// TODO Auto-generated method stub
 		
 		
-		for(int i=1;i<=24;i++) //영화개수만큼 돌리면서
+		for(int i=1;i<=31;i++) //극장개수만큼 돌리면서
 		{
 			String res=movieRandomData(15);
 			System.out.println(i+":"+res);
 			
-			MovieVO vo=new MovieVO();
-			vo.setMno(i);
-			vo.setTheaterNo(res);
-			MovieDAO.movieTheaterUpdate(vo);//데이터베이스에 값 넣기
+			//MovieVO vo=new MovieVO();
+			ReserveDateVO vo=new ReserveDateVO();
+			vo.setTno(i);
+			vo.setTime(res);
+
+			MovieDAO.movieTimeUpdate(vo);;//데이터베이스에 값 넣기
 			
 	
 		}
@@ -30,9 +32,9 @@ public class MainClass {
 		
 		//랜덤은 중복으로 들어올수도있다=> 아래서 중복처리 해줌!!
 		//극장이 기본 디폴트 8개 => 9개~15개는 영화마다 다르게됨!!
-		int no=(int)(Math.random()*8)+8; // 0~
+		int no=(int)(Math.random()*4)+7; // 예약가능한 날 15일 주기 각 극장당!
 		//기본으로 모든 영화는 8개의 영화관을 갖고
-		//
+		
 		
 		
 		int[] com=new int[no]; //몇개가 발행할 건지 확인?
@@ -46,7 +48,7 @@ public class MainClass {
 			bCheck=true;
 			while(bCheck) //중복없는 동안 
 			{
-				rand=(int)(Math.random()*15)+1;// 0~15 //영화정보 받기 1,3,5, => 스트링토크나이저로 자름! 
+				rand=(int)(Math.random()*29)+1;// 1~31일까지 랜덤 발생 / 1~29
 				bCheck=false; //빠져나감
 				for(int j=0; j<i; j++){ //중복제거 ,// i는 저장된 개수 , j<=i를 안한이유는 처음에 선택한 영화는 중복이 없기 때문에.
 					

@@ -1,6 +1,7 @@
 package com.sist.dao;
 import java.util.*;
 
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -98,6 +99,113 @@ public class MovieDAO {
 		}
 		return vo;
 	}
+	
+	
+	
+	public static void movieDataUpdate(ReserveTheaterVO vo)
+	{
+		SqlSession session=null;
+		
+		try{
+			
+			session=ssf.openSession(true);
+			session.update("movieDataUpdate", vo);
+			
+		}
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			
+		}finally{
+			
+			if(session!=null)
+				session.close();
+			//main으로 가서 극장정보 첨부?
+		}
+		
+	}
+	
+	
+	
+
+	public static void movieTimeUpdate(ReserveDateVO vo)
+	{
+		SqlSession session=null;
+		
+		try{
+			
+			session=ssf.openSession(true);
+			session.update("movieTimeUpdate", vo);
+			
+		}
+		catch(Exception ex){
+			
+			ex.printStackTrace();
+			
+		}finally{
+			
+			if(session!=null)
+				session.close();
+		}
+		
+	}
+	
+	
+	public static String movieTimeData(int tno)
+	{
+		
+		
+		String result="";
+		SqlSession session=null;
+		
+		try{
+			
+			session=ssf.openSession();
+			result=session.selectOne("movieTimeData", tno);
+			
+		}catch(Exception ex){
+			
+			ex.printStackTrace();
+			
+		}finally{
+			
+			if(session!=null)
+			session.close();
+			
+		}
+		
+		return result;
+		
+	}
+		
+		//List => forEach in()
+		public static String movieTimeData2(int tno)
+		{
+			
+			String result="";
+			SqlSession session=null;
+			
+			try{
+				
+				session=ssf.openSession();
+				result=session.selectOne("movieTimeData2", tno);
+				
+			}catch(Exception ex){
+				
+				ex.printStackTrace();
+				
+			}finally{
+				
+				if(session!=null)
+				session.close();
+				
+			}
+			
+			return result;
+				
+		}
+	
+	
 	
 }
 

@@ -6,24 +6,121 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+	//td, tr은 링크가 안걸림
+	$('.rdate').hover(function(){
+	
+		$(this).css("cursor","pointer");
+		
+	},function(){
+		
+		$(this).css("cursor","none");
+		
+	})
+	
+	
+	
+	
+	
+	//year의 선택이 바뀌었다면
+	$('#year').change(function(){
+	
+		var year=$(this).val();
+		var month=$('#month').val();
+		
+		$.ajax({
+			
+			type:'post',
+			url:'date.do',
+			data:{"year":year,"month":month},
+			success:function(res){
+				
+				$('#movie-date').html(res);
+				
+			}//success끝!
+		})//ajax끝
+	})//선택함수 끝!
+	
+	
+	
+	
+	$('#month').change(function(){
+		
+		var year=$('#year').val();
+		var month=$(this).val();
+		
+		$.ajax({
+			
+			type:'post',
+			url:'date.do',
+			data:{"year":year,"month":month},
+			success:function(res){
+				
+				$('#movie-date').html(res);
+				
+			}//success끝!
+		})//ajax끝
+	})
+	//선택함수 끝!
+	
+	
+	$('.rdate').click(function(){
+	
+		var year=$('#year').val();
+		var month=$('#month').val();
+		var day=(this).text();
+		var rday=year+"년 "+month+"월 "+day+"일";
+		$('#movie-date2').text(rday); //reserve.jsp에 출력함! 
+		
+		
+		//time.jsp로 날짜정보 보내기
+		$.ajax({
+		
+			type:'post',
+			url:'time.do',
+			data:{"tno":day},
+			success:function(res){
+				
+				$('#movie-time').html(res);
+			}
+		})
+		// ajax끝!
+		
+	})
+	//선택함수 끝
+	
+	
+	
+})//전체함수 끝!
+
+
+
+</script>
 </head>
 <body>
 	<div class="row" style="width:450px; margin:0px auto;">
 		<h3 class="text-center">${year }년 ${month }월</h3>
+		
 		<table class="table">
 			<tr>
 				<td>
-					<select name=year>
+					<select name=year id="year">
 					<c:forEach var="i" begin="2020" end="2030" >
 						<c:if test="${i==year }">
 							<option selected>${i }</option>
 						</c:if>
+						
 						<c:if test="${i!=year }">
 							<option>${i }</option>
 						</c:if>
+						
 					</c:forEach>
 					</select>년도 &nbsp;
-					<select name=month>
+					
+					<select name=month id="month">
 					<c:forEach var="i" begin="1" end="12" >
 						<c:if test="${i==month }">
 							<option selected>${i }</option>
@@ -33,10 +130,11 @@
 						</c:if>
 					</c:forEach>
 					</select>월
-					
 				</td>
 			</tr>
 		</table>
+		
+		
 		<table class="table">
 			<tr>
 				<c:forEach var="sw" items="${strWeek }">
@@ -58,17 +156,26 @@
 						<c:forEach var="j" begin="1" end="${week }">
 							<td>&nbsp;</td>
 						</c:forEach>
-				</c:if>
-					 <td class="text-center">${i }</td>
+					</c:if>
+					<c:if test="${i==days[i-1] }">
+						<td class="text-center success rdate">${i }</td>
+					</c:if>
+					
+					
+					
+					<c:if test="${i!=days[i-1]} ">
+						<td class="text-center">${i }</td>
+					</c:if>
+					
+					
 					<c:set var="week" value="${week+1 }"/><%--week+1 == week++ --%>
 					<c:if test="${week>6 }">
 					<c:set var="week" value="0"/>
 					</tr>
-					<tr>
+					<tr style="height:45px">
 					</c:if>
 			</c:forEach>
 			</tr>
-			
 		</table>
 	</div>
 </body>

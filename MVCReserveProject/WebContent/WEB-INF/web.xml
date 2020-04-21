@@ -7,11 +7,11 @@
   	<servlet-class>com.sist.controller.DispatcherServlet</servlet-class>
   	<init-param>
   		<param-name>contextConfigLocation</param-name>
-  		<param-value>C:\webDev\webStudy\MVCReserveProject\WebContent\WEB-INF\app.xml</param-value>
+  		<param-value>C:\Users\sist\git\repository13\MVCReserveProject\WebContent\WEB-INF\app.xml</param-value>
   	</init-param>
   	<init-param>
   		<param-name>defaultPath</param-name>
-  		<param-value>C:\webDev\webStudy\MVCReserveProject\src</param-value>
+  		<param-value>C:\Users\sist\git\repository13\MVCReserveProject\src</param-value>
   	</init-param>
   </servlet>
   <servlet-mapping>

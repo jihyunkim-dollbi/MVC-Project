@@ -49,6 +49,7 @@
  	 	<typeAlias type="com.sist.dao.ReserveTheaterVO" alias="ReserveTheaterVO"/>
  	 	<typeAlias type="com.sist.dao.ReserveTimeVO" alias="ReserveTimeVO"/>
  	 	<typeAlias type="com.sist.dao.ReserveVO" alias="ReserveVO"/>
+ 	 	<typeAlias type="com.sist.dao.MemberVO" alias="MemberVO"/>
  	 	 
  	 </typeAliases>
   	 <environments default="development"><!-- 환경설정:오라클 연결 정보  (environment)+ => 한번 이상은 사용해야함!=> 환경은 여러개 사용가능!오라클,myBatis, 마리아db등등.. -->

@@ -22,4 +22,43 @@
 		FROM reserveTheater
 		WHERE tno=#{tno}
 	</select>
+	<update id="movieDataUpdate" parameterType="ReserveTheaterVO">
+		UPDATE reserveTheater SET
+		tdate=#{tdate}
+		WHERE tno=#{tno}
+	</update>
+	
+	<!-- datevo에 time에 값을 채울예정! -->
+	<update id="movieTimeUpdate" parameterType="ReserveDateVO">
+		UPDATE reservedate SET
+		time=#{time}
+		WHERE tno=#{tno}
+	</update>
+	<select id="movieTimeData" resultType="string" parameterType="int">
+		SELECT time 
+		FROM reserveDate
+		WHERE tno=#{tno}
+	</select>
+	
+	<select id="movieTimeData2" resultType="string" parameterType="int">
+		SELECT time 
+		FROM reserveTime
+		WHERE tno=#{tno}
+	
+	</select>
+	
+	<select id="movieIdCount" resultType="int" parameterType="String">
+	 	SELECT COUNT(*) FROM member
+	 	WHERE id=#{id}
+	
+	</select>
+	<select id="movieGetPwd" resultType="MemberVO" parameterType="String">
+		SELECT id,admin,name, pwd 
+		FROM member
+		WHERE id=#{id}
+	
+	</select>
+	
+	
+	
 </mapper>
