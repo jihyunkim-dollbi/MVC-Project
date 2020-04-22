@@ -76,6 +76,11 @@ $(function(){
 		$('#movie-date2').text(rday); //reserve.jsp에 출력함! 
 		
 		
+		//reserve로 정보 보내기
+		$('#rdate').val(rday); //<input type hidden..here!>
+		
+		
+		
 		//time.jsp로 날짜정보 보내기
 		$.ajax({
 		
@@ -157,15 +162,15 @@ $(function(){
 							<td>&nbsp;</td>
 						</c:forEach>
 					</c:if>
-					<c:if test="${i==days[i-1] }">
-						<td class="text-center success rdate">${i }</td>
-					</c:if>
-					
-					
-					
-					<c:if test="${i!=days[i-1]} ">
-						<td class="text-center">${i }</td>
-					</c:if>
+				
+				<c:if test="${i==days[i-1] }">
+					<td class="text-center success rdate">${i }</td>
+				</c:if>
+			
+				<c:if test="${i!=days[i-1] }">
+					<td class="text-center ">${i }</td>
+				</c:if>
+				
 					
 					
 					<c:set var="week" value="${week+1 }"/><%--week+1 == week++ --%>

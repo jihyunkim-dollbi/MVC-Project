@@ -13,7 +13,8 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/jquery.js"></script>
   <script type="text/javascript">
-  $(function(){
+ 
+ $(function(){
 		//시작하자마자 출력
 	  //영화정보를 디폴트로 출력해놓아야한다.
 	  $.ajax({
@@ -60,7 +61,7 @@
 					</table>
 					<div style="overflow-y:scroll; height:450px;" id="movie-list">
 					</div>
-				</td>0
+				</td>
 
 			
 				
@@ -138,8 +139,31 @@
 							</td>
 						</tr>
 						<tr>
+						<!-- 
+RNO          NUMBER          자동증가        
+ID           VARCHAR2(20)    session
+MNO          NUMBER        	  영화번호
+TNAME        VARCHAR2(200)   극장
+RDATE        VARCHAR2(200)   날짜
+RTIME        VARCHAR2(100)   사간
+RINWON       VARCHAR2(50)    인원
+RPRICE       VARCHAR2(20)    금액
+ISRESERVE    NUMBER          0   =>admin이 승인을 시킴!(1)
+
+
+
+						 -->
 							<td class="text-center">
-								<input type=button value="예매하기" class="btn btn-sm btn-danger" disabled id="resBtn">
+							<form method="post" action="reserve_ok.do">
+							<input type=hidden name=mno value="" id="mno">
+							<input type=hidden name=tname value="" id="tname">
+							<input type=hidden name=rdate value="" id="rdate">
+							<input type=hidden name=rtime value="" id="rtime">
+							<input type=hidden name=rinwon value="" id="rinwon">
+							<input type=hidden name=rprice value="" id="rprice">
+							<input type=submit value="예매하기" class="btn btn-sm btn-danger" disabled id="resBtn">
+							</form>
+							<a href="mypage.do" class="btn btn-sm btn-primary">마이페이지</a>
 							</td>
 						</tr>
 					</table>

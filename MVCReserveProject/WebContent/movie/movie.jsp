@@ -30,7 +30,10 @@
 		  $('#0').attr("src",poster); // 부모 페이지에 여기의 scr정보(src="def.png")를 여기의 poster로 보내!! 
 		  $('#movie-title').text($(this).text());
 		  $('#movie-score').text($(this).attr('data-score'));
-		
+		  $('#mno').val($(this).attr("data-mno")); //예매하기를 누르면 mno에 value값을 넣기위함! =>reserve페이지에서!
+		  //여기서 갖고있는 데이터를 보냄 reserve.jsp로 모든 정보를 보내주고 reserve에서는 hidden으로 submit할 경우 데이터를 보냄!!
+		  //
+		  
 		  
 		//영화제목 선택했을때 극장정보 jsp를 ajax로 가져오기 위함! 
 		  	var tno=$(this).attr("data-theater");
@@ -51,8 +54,6 @@
 	  })
 	  //영화선택 버튼 클릭 함수 끝!!
 
-	
-	  
   })
   //함수끝!
   
@@ -61,12 +62,12 @@
 <body>
 	<div class="row" style="width:350px; margin:0px auto;height:500px ">
 		<table class="table">
-			<c:forEach var="vo" items="${mlist }">
+			<c:forEach var="vo" items="${mList }">
 			<tr>
 				<td>
 					<img src="${vo.poster }" width=35 height=35>
 				</td>
-				<td class="movie_title" data-poster="${vo.poster }" data-score="${vo.score }" data-theater="${vo.theaterNo }">${vo.title }</td><!-- data-poster를 보내기 -->
+				<td class="movie_title" data-poster="${vo.poster }" data-score="${vo.score }" data-theater="${vo.theaterNo }" data-mno="${vo.mno }">${vo.title }</td><!-- data-poster를 보내기 -->
 				<!--  이미 가지고 있는 정보를 페이지로 보낼수있다.. 스크립트로 정보를 감추고 있다가 보내기=> reserve에서 읽음 -->
 			</tr>
 			</c:forEach>

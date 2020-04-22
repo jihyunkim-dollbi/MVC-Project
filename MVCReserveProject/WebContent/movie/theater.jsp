@@ -31,11 +31,17 @@ $(function(){
 		var theater=name+"("+loc+")";
 		$('#movie-theater2').text(theater); //reserve에 예매정보란에 결과 출력해주기 ==> theater.jsp의 값을 클릭하는 순간 reserve.jsp로 보냄!
 		
+		
+		//reserve로 결과값 보내기 ==> 보내고 hidden으로 값을 model로 보낼예정!
+		$('#tname').val(theater); 
+		
+		
 		//극장선택시
 		//date에 값을 보내기
 		var year= $('#year').val();
 		var month=$('#month').val();
 		var rdate=$(this).attr("data-date");
+		
 		$.ajax({
 		
 			type:'post',

@@ -2,12 +2,15 @@ package com.sist.model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
+import com.sist.dao.MemberVO;
 import com.sist.dao.MovieDAO;
 import com.sist.dao.MovieVO;
 import com.sist.dao.ReserveTheaterVO;
+import com.sist.dao.ReserveVO;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -29,7 +32,7 @@ public class MovieModel {
 		//db가져오기
 		//static이기 때문에 따로 생성x
 		List<MovieVO> list=MovieDAO.movieListData();
-		request.setAttribute("mlist", list);
+		request.setAttribute("mList", list);
 		
 		return "movie.jsp";
 	}
@@ -198,6 +201,29 @@ public class MovieModel {
 	}
 	
 	
+	/*
+	 * model: ~vo, ~dao, model =>model안에 일반 자바처리 모두!
+	 * view(jsp)
+	 * controller => 사용자 요청을 받아서=> 요청처리 내용을 전송!
+	 * 				===============================
+	 * 
+	 * 사용자 값을 jsp에서 받아서 모델에서 request로 받아놓음!
+	 * mapper에서 sql로 사용자값을 받는경우 처리될 수있도록 resulttype과 parameter를 정의
+	 * =>매퍼에서 resulttype과 parameter에 따른 쿼리를 작성하고 (모든 처리를 한개의 쿼리문장으로 할 필요가 없이 여러문장을 작성후 dao혹은 모델에서 각각처리하거나 한번에 같이 처리할 수도있다.)
+	 * dao에서도 동일한 패턴으로 리턴형을 작성한다.
+	 * 하지만 dao의 매소드의 parameter는다른 개념이다. 사용자로부터 받은 request를 각각의 복수 매개변수로 받아 그것을 서로다른 쿼리에 저장하여 함께 결국 한개의 vo에 담을 수 있고
+	 * 그 것은 매퍼의 리턴형과 동일해야하고, 각각의 매퍼 파라미터는 
+	 *MemberVO mvo=session.selectOne("movieGetPwd",id);
+	 *int count=session.selectOne("movieIdCount",id); 
+	 * 
+	 * select문에서 동일하게 적용한다.
+	 * 
+	 * 따라서, 각각의 request를 직접 매퍼에 적용해야하는 경우 attribute할 경우는 dao에서 처리를 하고
+	 * 받은 request를 형변환 또는 그대로 적용하는 경우에도 모델에서 처리가능하다
+	 * 결국 사용자로부터 전달받은 request를 어떻게 가공하여 매퍼에 전송하는지가 관건이다.
+	 * 
+	 */
+	
 	
 	@RequestMapping("movie/login_ok.do")
 	public String movie_login_ok(HttpServletRequest request, HttpServletResponse response)
@@ -207,25 +233,70 @@ public class MovieModel {
 		String pwd=request.getParameter("pwd");
 		
 		//dao
+		MemberVO vo=MovieDAO.movieLogin(id, pwd);
+		//결과값을 받은  vo에 담김!
+		
+		//여기서 해야할일
+		//session에 저장하기
+		if(vo.getMgs().equals("OK"))//session에 등록하기
+		{
+			//vo에 담긴 정보들을 각각 session에 저장하기
+			HttpSession session=request.getSession();
+			session.setAttribute("id", vo.getId());
+			session.setAttribute("name", vo.getName());
+			session.setAttribute("admin", vo.getAdmin());
+		}
+		
+		//admin이면 예매현황보기
+		//admin이 아닌 경우 예매하기!
+		//model에서 스크립트 작업을 할수없다. 여기서는 페이지 전화 혹은 request 전송/받기만 가능
+		//controller는 jsp파일찾기, .do실행만 할뿐
+		//두가지의 경우의 수였다면 admin처리도 여기서 리턴형으로가능했겠지만
+		//history.back을 할수없기때문에.. 
+		//sendRedirect(".do") , forward: .jsp
 		
 		
+		
+		//jsp로 보내기
+		request.setAttribute("vo", vo);
+		//dao에서 설정한대로 저장된 vo를 jsp로 보내기!
 		
 		
 		return "login_ok.jsp";
 	}
 	
 	
+	@RequestMapping("movie/admin.do")
+	public String movie_admin(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+	
+		return "admin.jsp";
+	}
 	
 	
+	@RequestMapping("movie/mypage.do")
+	public String movie_mypage(HttpServletRequest request, HttpServletResponse response)
+	{
+	
+		return "mypage.jsp";
+	}
 	
 	
+	@RequestMapping("movie/reserve_ok.do")
+	public String movie_reserve_ok(HttpServletRequest request, HttpServletResponse response)
+	{
+		ReserveVO vo=new ReserveVO();
+		
+		String mno=request.getParameter("mno");
+		String tname=request.getParameter("tname");
+		String rdate=request.getParameter("rdate");
+		String rtime=request.getParameter("rtime");
+		String rinwon=request.getParameter("rinwon");
+		String rprice=request.getParameter("rprice");
 	
-	
-	
-	
-	
-	
-	
+		return "redirect:mypage.do";
+	}
 	
 	
 	

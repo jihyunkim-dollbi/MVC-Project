@@ -2,6 +2,7 @@ package com.sist.dao;
 import java.util.*;
 
 
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -206,6 +207,63 @@ public class MovieDAO {
 		}
 	
 	
+		//비번확인
+		public static MemberVO movieLogin(String id, String pwd){
+			
+			
+			MemberVO vo= new MemberVO();
+			SqlSession session=null;
+			
+			try
+			{
+				
+				session=ssf.openSession(); //커넥션의 주소를 가져옴..?
+				 int count=session.selectOne("movieIdCount",id); //count리턴형 1 or 0
+				 if(count==0){
+					 
+					 vo.setMgs("NOID"); //아이디 존재X
+				 }
+				 else
+				 {
+					 //아이디가 존재하는 경우
+					 MemberVO mvo=session.selectOne("movieGetPwd",id); //리턴형 vo
+					 
+					 //비번확인
+					 if(pwd.equals(mvo.getPwd()))
+					 {
+						 //비번일치
+						vo.setMgs("OK");
+						vo.setId(mvo.getId());
+						vo.setAdmin(mvo.getAdmin());
+						vo.setName(mvo.getName());
+						//vo에 모두 실어서 넘김!
+					 }
+					 else
+					 {
+						 //비번x
+						 vo.setMgs("NOPWD"); //메시지
+						 
+					 }
+				 }
+						 
+						 
+				vo=session.selectOne("movieGetPwd",pwd);
+				
+			}catch(Exception ex){
+				
+				ex.printStackTrace();
+				
+			}finally{
+				
+				if(session!=null)
+					session.close();
+			}
+			return vo;
+			
+		}
+		
+		
+		
 	
 }
 

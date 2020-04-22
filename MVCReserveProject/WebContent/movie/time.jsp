@@ -35,6 +35,11 @@ $(function(){
 		var t=h+"시간"+m+"분";
 		$('#movie-time2').text(t); //t값을 여기로 보내!!
 		
+		
+		//reserve로 정보 보내기
+		$('#rtime').val(t);
+		
+		
 		$.ajax({
 		
 			type:'post',

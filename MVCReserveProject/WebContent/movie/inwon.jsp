@@ -43,16 +43,19 @@ $(function(){
 		
 		$('#movie-inwon2').text(res); //예매정보 출력해
 		$('#movie-price').text(p);    // 동일!
-		$('#resBtn').attr('disabled', false);  //인원까지 선택하면 버튼ok!
 		
+		//결과값 reserve로 보내기
+		$('#rinwon').val(res); 
+		$('#rprice').val(p);   
+		
+		$('#resBtn').attr('disabled', false);  //인원까지 선택하면 버튼ok!
+	
 		
 	})
 	//클릭함수 끝!
-	
-	
-	
-	
+
 })
+//스크립트 끝!!
 
 </script>
 </head>

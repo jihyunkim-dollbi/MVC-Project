@@ -3,7 +3,7 @@ package com.sist.dao;
 public class MemberVO {
 
 	private String id;
-	private int admin;
+	private String admin;
 	private String pwd;
 	//세션저장해놓기!!
 	
@@ -35,12 +35,12 @@ public class MemberVO {
 	public void setMgs(String mgs) {
 		this.mgs = mgs;
 	}
-	public int getAdmin() {
+	public String getAdmin() {
 		return admin;
 	}
-	public void setAdmin(int admin) {
+	public void setAdmin(String admin) {
 		this.admin = admin;
 	}
-	
+
 	
 }
