@@ -16,15 +16,14 @@
 		<script>
 			alert("ID가 존재하지 않습니다.");
 			history.back();
-		
 		</script>
 		</c:when>
+		
 		<c:when test="${vo.mgs=='NOPWD' }">
 		<!-- id있고 pwd가 틀린상태 -->
 			<script>
 			alert("비밀번호가 틀립니다.");
 			history.back();
-		
 		</script>
 		</c:when>
 		
@@ -40,8 +39,4 @@
 			<c:redirect url="reserve.do"/>
 			</c:if>
 		</c:otherwise>
-	
-	
-	
-	
 	</c:choose>

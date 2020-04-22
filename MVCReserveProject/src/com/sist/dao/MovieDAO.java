@@ -263,7 +263,130 @@ public class MovieDAO {
 		}
 		
 		
+		public static void movieRserveOK(ReserveVO vo)
+		{
+			sqlsession session=null;
+			
+			try{
+				
+				session=ssf.opensession();
+				session.insert("movieRserveOK",vo);
+				
+			}catch(Exception ex)
+			{
+				ex.printStackTrace();
+				
+			}finally{
+				
+				if(session!=null)
+					session.close();
+			}	
+	
+		}
 		
+		
+		
+		public static List<ReserveVO> movieMypage(String id)
+		{
+			List<ReserveVO> list=new ArrayList<ReserveVO>();
+			
+			sqlsession session=null;
+			try{
+				
+				session=ssf.opensession();
+				list=session.selectList("movieMypage", id);
+				
+			}catch(Exception ex)
+			{
+				ex.printStackTrace();
+				
+			}finally
+			{
+				if(session!=null)
+					session.close();
+				
+			}
+			return list;
+			
+		}
+		
+		
+		public static List<ReserveVO> movieAdmin()
+		{
+			List<ReserveVO> list=new ArrayList<ReserveVO>();
+			
+			sqlsession session=null;
+			try{
+				
+				session=ssf.opensession();
+				list=session.selectList("movieAdmin");
+				
+			}catch(Exception ex)
+			{
+				ex.printStackTrace();
+				
+			}finally
+			{
+				if(session!=null)
+					session.close();
+				
+			}
+			return list;
+			
+		}
+		
+		
+		
+		
+		public static void adminUpdate(int rno)
+		{
+			
+			sqlsession session=null;
+			
+			try{
+				
+				session=ssf.opensession(true);
+				session.update("adminUpdate",rno);
+				
+			}catch(Exception ex)
+			{
+				ex.printStackTrace();
+				
+			}finally
+			{
+				if(session!=null)
+					session.close();
+				
+			}
+			
+		}
+		
+		
+		public static MovieVO reserveResultData(int mno)
+		{
+			
+			sqlsession session=null;
+			MovieVO vo=new MovieVO();
+			
+			try{
+				
+				session=ssf.opensession();
+				vo=session.selectOne("reserveResultData",mno);
+				
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+				
+			}
+			finally
+			{
+				if(session!=null)
+					session.close();
+				
+			}
+			return vo;
+		}
 	
 }
 

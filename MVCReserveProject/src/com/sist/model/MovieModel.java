@@ -269,7 +269,9 @@ public class MovieModel {
 	@RequestMapping("movie/admin.do")
 	public String movie_admin(HttpServletRequest request, HttpServletResponse response)
 	{
-		
+		//admin이 로그인할경우 
+		List<ReserveVO> list=MovieDAO.movieAdmin();
+		request.setAttribute("list", list);
 	
 		return "admin.jsp";
 	}
@@ -278,7 +280,14 @@ public class MovieModel {
 	@RequestMapping("movie/mypage.do")
 	public String movie_mypage(HttpServletRequest request, HttpServletResponse response)
 	{
+		//세션에 있는 값(id, pwd, admin)을 가져옴
+		HttpSession session=request.getSession();
+		//session이 갖고있는 id를 스트링으로 받음!
+		String id=request.getParameter("id");
+		List<ReserveVO> list=MovieDAO.movieMypage(id);
 	
+		request.setAttribute("list", list);
+		
 		return "mypage.jsp";
 	}
 	
@@ -286,6 +295,13 @@ public class MovieModel {
 	@RequestMapping("movie/reserve_ok.do")
 	public String movie_reserve_ok(HttpServletRequest request, HttpServletResponse response)
 	{
+		try{
+			//인원 정보가 들어올때 한글이 들어오기때문에.. 오류가 발생=> INSERTX
+			request.setCharacterEncoding("UTF-8");
+			
+		}catch(Exception ex){}
+		
+		
 		ReserveVO vo=new ReserveVO();
 		
 		String mno=request.getParameter("mno");
@@ -295,11 +311,53 @@ public class MovieModel {
 		String rinwon=request.getParameter("rinwon");
 		String rprice=request.getParameter("rprice");
 	
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		
+		vo.setMno(Integer.parseInt(mno));
+		vo.setTname(tname);
+		vo.setRdate(rdate);
+		vo.setRtime(rtime);
+		vo.setRinwon(rinwon);
+		vo.setRprice(rprice);
+		vo.setId(id); 
+	
+		//DAO => INSERT
+		MovieDAO.movieRserveOK(vo);
+		//예약됨!
+		
+		
 		return "redirect:mypage.do";
 	}
 	
 	
 	
+	//대기중인 승인을 승인완료로 어드민이 승인해주기!
+	@RequestMapping("movie/admin_update.do")
+	public String admin_update(HttpServletRequest request, HttpServletResponse response)
+	{	
+		//rno를 보냈음 admin에서
+		String rno=request.getParameter("rno");
+		
+		//dao=> mapper
+		MovieDAO.adminUpdate(Integer.parseInt(rno));
+		
+		
+		return "redirect:admin.do"; //버튼만 다시 바뀔뿐
+	}
 	
+	
+	@RequestMapping("reserve_result.do")
+	public String movie_reserve_result(HttpServletRequest request, HttpServletResponse response)
+	{
+		String mno=request.getParameter("mno");
+		
+		//dao mapper고고
+		MovieVO vo=MovieDAO.reserveResultData(Integer.parseInt(mno));
+		
+		request.setAttribute("vo", vo);
+		
+		return "reserve_result.jsp";
+	}
 	
 }

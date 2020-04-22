@@ -59,6 +59,82 @@
 	
 	</select>
 	
+	<!-- 예매완료 / rno 예매번호   / 승인전에 초기값을 0으로 준다... -->
+	<insert id="movieReserveOk" parameterType="ReserveVO">
+	  <selectKey keyProperty="rno" resultType="int" order="BEFORE">
+		SELECT NVL(MAX(rno)+1,1) as rno FROM reserve
+	  </selectKey>
+		INSERT INTO reserve VALUES(
+		#{rno},
+		#{id},
+		#{mno},
+		#{tname},
+		#{rdate},
+		#{rtime},
+		#{rinwon},
+		#{rprice},
+		0
+		)
+	</insert>
 	
+	<!-- 예매완료시 mypage에서 title과 poster를 함께 모든 정보를 보여줌! STRING=> ID에 해당하는 내용을 모두 보여줌 
+		서로 다른 테이블에서 서브쿼리로 id가 같을떄 가져오는 상황 reservevo에 poster와 title을 생성하여 알리아스(변수명동일하게)로 서브쿼리를 사용!
 	
+	-->
+	<select id="movieMypage" resultType="ReserveVO" parameterType="string">
+		SELECT rno,
+			   mno,
+			  (SELECT poster FROM movie WHERE mno=reserve.mno) as poster, 
+			  (SELECT title FROM movie WHERE mno=reserve.mno) as title,
+			   tname, 
+			   rdate, 
+			   rtime, 
+			   rinwon, 
+			   rprice, 
+			   isreserve
+		FROM reserve
+		WHERE id=#{id}
+		ORDER BY rno DESC
+	</select>
+	
+	<select id="movieAdmin" resultType="ReserveVO" >
+		SELECT rno,
+			   mno,
+			   id,
+			  (SELECT poster FROM movie WHERE mno=reserve.mno) as poster, 
+			  (SELECT title FROM movie WHERE mno=reserve.mno) as title,
+			   tname, 
+			   rdate, 
+			   rtime, 
+			   rinwon, 
+			   rprice, 
+			   isReserve
+		FROM reserves
+		ORDER BY rno DESC
+	</select>
+	
+	<!-- WHERE rno=#{rno} ==> 의 의미는 rno값들 중에 우리가 받은 rno와 같은지 따라서 row의 값들의 비교  ${}=>컬럼 명 유뮤비교1! -->
+	<update id="adminUpdate" parameterType="int">
+		UPDATE reserve SET
+		isReserve=1
+		WHERE rno=#{rno}
+	</update>
+	
+	<select id="reserveResultData" resultType="MovieVO" parameterType="int">
+		SELECT * 
+		FROM movie
+		WHERE mno=#{mno}
+	</select>
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
