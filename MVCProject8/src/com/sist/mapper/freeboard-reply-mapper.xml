@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sist.mapper.freeboard-reply-mapper">
+<!-- 
+	private String id, name, msg;
+	private int no, bno, group_id, group_step, group_tab,root, depth;
+	private Date regdate;
+	
+	//입력한 날짜
+	private String dbday;
+
+	result를 사용하기 때문에 
+	커서에 값을 넣으라고 명령을해야한다.
+	SELECT no,bno,id,name,msg,regdate, TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI:SS') as dbday, group_tab
+	
+	아래서 변수명과 컬럼명을 일치시켜워야한다
+	==> PREPARESTATMENT는 인식을 하는데
+		CALLABLE은 설정을 해줘야한다.
+		
+		
+		//실행
+		1. web.xml => 2.app.xml => 3.myBatis(mapper.xml,config.xml) ==> 4. java를 마지막으로 실행!!
+
+ -->
+<!-- 설정값이 커서일경우 resultMap 설정을 해줘야한다. -->
+<resultMap type="BoardReplyVO" id="boardReplyMap">
+	<result property="no" column="no"/>
+	<result property="bno" column="bno"/>
+	<result property="id" column="id"/>
+	<result property="name" column="name"/>
+	<result property="msg" column="msg"/>
+	<result property="group_id" column="group_id"/>
+	<result property="group_step" column="group_step"/>
+	<result property="group_tab" column="group_tab"/>
+	<result property="root" column="root"/>
+	<result property="depth" column="depth"/>
+	<result property="regdate" column="regdate"/>
+	<result property="dbday" column="dbday"/>
+</resultMap>
+
+<!-- 
+
+댓글적은 insert! 대댓글x 
+CREATE OR REPLACE PROCEDURE replyListData(
+
+pStart NUMBER,
+pEnd NUMBER,
+pBno freeboard_reply.bno%TYPE,
+pResult OUT SYS_REFCURSOR
+
+javaType="java.lang.InTeger" jdbcType="INTEGER" => 서로 타입을 맞춰줘야
+pStart"맵에 이 이름으로 넣을께!
+매개변수 매칭시키기!
+
+<parameterMap type="hashmap" id="replyListData"> ===same name with parameterMap="replyListData">
+
+
+
+ -->
+ <parameterMap type="hashmap" id="replyListData">
+ 	<parameter property="pStart" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+ 	<parameter property="pEnd" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+ 	<parameter property="pBno" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+ 	<parameter property="pResult" jdbcType="CURSOR" mode="OUT" resultMap="boardReplyMap"/>
+ </parameterMap>
+ <!-- 이렇게 매칭을 시켜야 이것들을 모두 가져올수있따. -->
+ <select id="replyListData2" parameterMap="replyListData" statementType="CALLABLE">
+ 	{CALL replyListData(?,?,?,?)}
+ </select>
+<!-- 여기까지하면 자동으로 출력!=> 마이바티스에서 프로시져를 호출할때 쓰는 방식! => 프로시져는 모든게 select로 간다!!insert, update모두다... -->
+<!-- 
+	resultMap="boardReplyMap"/> ==> 결과를 여기에 넣어 
+	<resultMap type="BoardReplyVO" id="boardReplyMap"> 여기와 동일하게 ID를 주기!!
+	parametermap을 이용했다는것은 프로시져를 사용했다는 것이다. 사용법정도 알고있어야.
+ -->
+ 
+ <!-- 
+  pBno freeboard_reply.bno%TYPE,
+    pId member.id%TYPE,
+    pName member.name%TYPE,
+    pMsg freeboard_reply.msg%TYPE
+
+=> javaType="java.lang.String" jdbcType="VARCHAR" 스트링이 나오면 VARCHAR로 변화해라~~ 2아님!
+ 
+  -->
+  <parameterMap type="hashmap" id="replyInsertMap">
+  	<!--위문장이 프로시저의 매개변수 지정 란   	-->
+  	<parameter property="pBno" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+  	<parameter property="pId" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+  	<parameter property="pName" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+  	<parameter property="pMsg" javaType="java.lang.String" jdbcType="CLOB" mode="IN"/>
+  </parameterMap>
+  <select id="replyInsert2" parameterMap="replyInsertMap" statementType="CALLABLE">
+  	{CALL replyInsert(?,?,?,?)}
+  </select>
+  <!-- call 하여 키를 읽어서 값을 넣어줄것! -->
+  
+  
+  <!-- 
+  CREATE OR REPLACE PROCEDURE replyTotalPage(
+    pBno freeboard_reply.bno%TYPE,
+    pTotal OUT NUMBER
+   -->
+  <parameterMap type="hashmap" id="replyTotalMap">
+  	<parameter property="pBno" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+  	<parameter property="pTotal" javaType="java.lang.Integer" jdbcType="INTEGER" mode="OUT"/>
+  </parameterMap>
+  	<select id="replyTotalPage2" parameterMap="replyTotalMap" statementType="CALLABLE">
+  		{CALL replyTotalPage(?,?)}
+  	</select>
+  
+  
+  <!-- 
+  	2020.04.24
+  	댓글 수정하기 
+  	CREATE OR REPLACE PROCEDURE replyUpdate(
+    pNo freeboard_reply.no%TYPE,
+    pMsg freeboard_reply.msg%TYPE
+    <select id="replyUpdate2" parameterMap="replyUpdateMap" statementType="CALLABLE">
+     parameterMap은 위에서 정의한 대로  아래 ? ? 에 넣어줘!!!
+  -->
+  <parameterMap type="hashmap" id="replyUpdateMap">
+  	<parameter property="pno" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+  	<parameter property="pMsg" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+  </parameterMap>
+  	<select id="replyUpdate2" parameterMap="replyUpdateMap" statementType="CALLABLE">
+  		{CALL replyUpdate(?,?)}
+  	</select>
+  
+  
+  <!-- 
+  
+  CREATE OR REPLACE PROCEDURE replyReplyInsert(
+    pBno freeboard_reply.bno%TYPE,
+    pId member.id%TYPE,
+    pName member.name%TYPE,
+    pMsg freeboard_reply.msg%TYPE,
+    pNo freeboard_reply.no%TYPE
+  
+   -->
+  <parameterMap type="hashmap" id="replyReplyInsertMap">
+  		<parameter property="pBno" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+  		<parameter property="pPno" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+  		<parameter property="pId" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+  		<parameter property="pName" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+  		<parameter property="pMsg" javaType="java.lang.String" jdbcType="VARCHAR" mode="IN"/>
+  
+  </parameterMap>
+  <select id="replyReplyInsert2" parameterMap="replyReplyInsertMap" statementType="CALLABLE">
+  {CALL replyReplyInsert(?,?,?,?,?)}
+  </select>
+  
+  
+   <parameterMap type="hashmap" id="replyDeleteMap">
+  	<parameter property="pno" javaType="java.lang.Integer" jdbcType="INTEGER" mode="IN"/>
+  </parameterMap>
+  	<select id="replyDelete2" parameterMap="replyDeleteMap" statementType="CALLABLE">
+  		{CALL replyDelete(?)}
+  	</select>
+  
+  
+  
+  
+  
+  
+  
+</mapper>

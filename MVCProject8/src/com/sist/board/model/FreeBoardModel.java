@@ -2,6 +2,7 @@ package com.sist.board.model;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.sist.controller.Controller;
 import com.sist.controller.RequestMapping;
@@ -9,6 +10,7 @@ import com.sist.controller.RequestMapping;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import com.sist.dao.*;
+import com.sist.vo.BoardReplyVO;
 import com.sist.vo.BoardVO;
 /*
  * 
@@ -116,15 +118,45 @@ public class FreeBoardModel {
 		String no=request.getParameter("no");
 		//사용자는 no를 보냇고 vo를 받을 것
 		
+		//20200423 대글의 페이지
+		//상세보기 밑에 댓글이 붙을 예정이기 때문에 상세보기 페이지에서 처리
+		String page=request.getParameter("page");
+
+		if(page==null)
+			page="1";
+		int curpage=Integer.parseInt(page);
+		
+		Map map=new HashMap();
+		int rowSize=10;
+		int start=(curpage*rowSize)-(rowSize-1);
+		int end=curpage*rowSize;
+		map.put("pStart", start); //매퍼의 property 의 key name과 일치해야한다.
+		map.put("pEnd", end);   //매퍼의 in변수에 값 넣기
+		map.put("pBno", Integer.parseInt(no));
+		
+		//댓글 읽어오기
+		List<BoardReplyVO> list=FreeBoardReplyDAO.replyListData(map);
+		
+		
+		//새롭게 생성 메모리할당 again!
+		map=new HashMap();
+		//위에서 넣은 값은 지워야 다시 시작할 수있으니까 => totalpage구하기 위해 in변수 pBno를 넣어줌!!
+		//다시 넣기 ==> 토탈페이지 구하려함
+		map.put("pBno", Integer.parseInt(no)); // 데이터형 바꾸기!!
+		int totalpage=FreeBoardReplyDAO.replyTotalPage(map);
+		//따라서 맵은 서로 다른 dao에 연결할때도 그때그때 생성하여 넣어주면된다.
+		
 		//doa에서 
 		FreeBoardDAO dao=new FreeBoardDAO();
-		
 		
 		//vo 받기
 		BoardVO vo=dao.freeboardInfoData(Integer.parseInt(no), 1); //임이의 1을 주어 프로시저에서 조건건대로 hit에 +1을 해준다 => 조회수 증가 => 수정에서는 2를 주어 조호수 증가x
 		
 		
 		//jsp 보내기
+		request.setAttribute("list", list);
+		request.setAttribute("curpage", curpage);
+		request.setAttribute("totalpage", totalpage);
 		request.setAttribute("vo", vo);
 		request.setAttribute("main_jsp", "../freeboard/detail.jsp");
 		
@@ -219,14 +251,10 @@ public class FreeBoardModel {
 		/*
 		 * 사용자
 		 * (디테일에서 a tag에서 화면이동으로 no를 보내면 delete.jsp에서 사용가능하며 그 받은 값을 다시 hidden으로 no를 model로 받아서 request로 받아서 set 으로 보냄)delete.do?no=10 ==> model(사용자가 보내준 값을 받는다)
-		 * ==> form 에서 action의 의미는 거기서 이것을 처리하라는 것인데 그럼 보낸값도 거기서 받는 건가??
-		 * 
+		 * ==> form 에서 action의 의미는 거기서 이것을 처리하라는 것인데 그럼 보낸값도 거기서 받는 건가?? 
 		 */
 		
 		String no=request.getParameter("no");
-		
-		
-		
 		
 		request.setAttribute("main_jsp", "../freeboard/delete.jsp"); //비번 입력창 보여주기
 		request.setAttribute("no", no);
@@ -245,13 +273,140 @@ public class FreeBoardModel {
 		FreeBoardDAO dao= new FreeBoardDAO();
 		//프로시져 만들러 고곡!!
 		
-		
-		
 		boolean bCheck=dao.freeboardDelete(Integer.parseInt(no), pwd);
 		request.setAttribute("bCheck", bCheck);
 	
 		return "../freeboard/delete_ok.jsp";
 	}
+	
+	//댓글달기
+	@RequestMapping("freeboard/reply_insert.do")
+	public String freeboard_reply_insert(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		try{
+			
+			request.setCharacterEncoding("UTF-8");
+			
+		}catch(Exception ex){}
+		
+		// 사용자가 보내준 것. MSG, BNO받기
+		String bno=request.getParameter("bno");
+		String msg=request.getParameter("msg");
+		
+		//id name값 받아놓기from session 
+		//request ==> session and cookie 를 얻을 수있다.
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		String name=(String)session.getAttribute("name");
+		
+		//insert처리
+		//dao =>묶어서 보내기
+		// <key, value>
+		Map<String, Object> map=new HashMap<String, Object>();
+		//키는 mapper의 property와 맞춰야한다.
+		map.put("pBno",Integer.parseInt(bno));
+		map.put("pId", id);
+		map.put("pName", name);
+		map.put("pMsg",msg); 
+		
+		FreeBoardReplyDAO.replyInsert(map);
+		
+		return "redirect:../freeboard/detail.do?no="+bno; //디테일을 다시 실행하고 들어감
+		
+	}
+	
+	
+	//댓글 수정
+	@RequestMapping("freeboard/reply_update.do")
+	public String freeboard_reply_update(HttpServletRequest request, HttpServletResponse response)
+	{
+		try{
+			
+			request.setCharacterEncoding("UTF-8");
+			
+		}catch(Exception ex) {}
+		
+		
+		String bno=request.getParameter("bno");
+		String no=request.getParameter("no"); //no 이 번호에 msg를 변경해
+		String msg=request.getParameter("msg");
+		
+		Map map=new HashMap();
+		map.put("pNo", Integer.parseInt(no));
+		map.put("pMsg", msg); //key의 name만 잘 맞춰주면 ok!!		
+		
+		FreeBoardReplyDAO.replyUpdate(map);
+
+		
+		return "redirect:../freeboard/detail.do?no="+bno;
+	}
+	
+	
+	//대댓글 insert
+	@RequestMapping("freeboard/reply_reply_insert.do")
+	public String freeboard_reply_reply_insert(HttpServletRequest request, HttpServletResponse response)
+	{
+		//데이터 2개 받음
+		try{
+			
+			request.getParameter("UTF-8");
+		}catch(Exception ex) {}
+		
+		
+		String bno=request.getParameter("bno");
+		String pno=request.getParameter("pno");
+		String msg=request.getParameter("msg");
+		
+		//네임받기
+		HttpSession session=request.getSession();
+		String id=(String)session.getAttribute("id");
+		String name=(String)session.getAttribute("name");
+		
+		Map map=new HashMap();
+		
+		map.put("pbno", Integer.parseInt(bno));
+		map.put("pPno", Integer.parseInt(pno));
+		map.put("pId", id);
+		map.put("pName", name);
+		map.put("pMsg", msg);
+		//프로시저가 5개의 변수를 받아야한다 5개의 in변수!!	
+		FreeBoardReplyDAO.replyReplyInsert(map);
+
+		return "redirect:../freeboard/detail.do?no="+bno;
+	}
+	
+
+	
+	@RequestMapping("freeboard/reply_delete.do")
+	public String freeboard_reply_delete(HttpServletRequest request, HttpServletResponse response)
+	{
+		String no=request.getParameter("no");
+		String bno=request.getParameter("bno");
+		
+		Map map=new HashMap();
+		map.put("pNo", Integer.parseInt(no));
+		FreeBoardReplyDAO.replyDelete2(map);
+		
+		return "redirect:../freeboard/detail.do?no="+bno;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
